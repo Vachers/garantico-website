@@ -19,9 +19,9 @@ export const LanguageSwitcher: React.FC = () => {
 
   return (
     <div className="relative group">
-      <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-primary-light/10 transition-colors">
-        <Globe className="w-5 h-5 text-text-dark" />
-        <span className="text-sm font-medium text-text-dark uppercase">
+      <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors">
+        <Globe className="w-5 h-5 text-white" />
+        <span className="text-sm font-medium text-white uppercase">
           {currentLocale}
         </span>
       </button>

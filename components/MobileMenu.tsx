@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 interface MobileMenuProps {
   locale: string;
@@ -23,7 +24,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ locale }) => {
     <div className="md:hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 text-text-dark hover:text-primary-ocean transition-colors"
+        className="p-2 text-white hover:text-primary-light transition-colors"
         aria-label="Menu"
       >
         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

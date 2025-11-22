@@ -73,38 +73,46 @@ export default function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <nav className="bg-white shadow-md sticky top-0 z-40">
+        <nav className="bg-primary-blue sticky top-0 z-50 shadow-lg">
           <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between h-16">
-              <Link href={`/${locale}`} className="text-xl md:text-2xl font-bold text-primary-blue">
+            <div className="flex items-center justify-between h-16 md:h-20">
+              <Link href={`/${locale}`} className="text-xl md:text-2xl font-bold text-white">
                 GarantiCo
               </Link>
-              <div className="hidden md:flex items-center gap-6">
+              <div className="hidden md:flex items-center gap-8">
                 <Link
                   href={`/${locale}`}
-                  className="text-text-dark hover:text-primary-ocean transition-colors"
+                  className="text-white hover:text-primary-light transition-colors font-medium"
                 >
                   {locale === "tr" ? "Ana Sayfa" : "Home"}
                 </Link>
                 <Link
                   href={`/${locale}/about`}
-                  className="text-text-dark hover:text-primary-ocean transition-colors"
+                  className="text-white hover:text-primary-light transition-colors font-medium"
                 >
                   {locale === "tr" ? "Hakkımızda" : "About"}
                 </Link>
                 <Link
                   href={`/${locale}/products`}
-                  className="text-text-dark hover:text-primary-ocean transition-colors"
+                  className="text-white hover:text-primary-light transition-colors font-medium"
                 >
                   {locale === "tr" ? "Ürünlerimiz" : "Products"}
                 </Link>
                 <Link
                   href={`/${locale}/contact`}
-                  className="text-text-dark hover:text-primary-ocean transition-colors"
+                  className="text-white hover:text-primary-light transition-colors font-medium"
                 >
                   {locale === "tr" ? "İletişim" : "Contact"}
                 </Link>
+                <div className="w-px h-6 bg-white/30"></div>
                 <LanguageSwitcher />
+                <div className="w-px h-6 bg-white/30"></div>
+                <Link
+                  href={`/${locale}/contact`}
+                  className="px-4 py-2 text-white hover:text-primary-light transition-colors font-medium"
+                >
+                  {locale === "tr" ? "İletişime Geçin" : "Contact Us"}
+                </Link>
               </div>
               <MobileMenu locale={locale} />
             </div>

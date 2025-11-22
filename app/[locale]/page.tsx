@@ -198,67 +198,74 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <div className="min-h-screen">
-        {/* Hero Section - Modern & Professional */}
-        <section className="relative bg-gradient-to-br from-primary-blue via-primary-ocean to-primary-accent text-white overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }}></div>
+        {/* Hero Section - Ocean Theme with Ships */}
+        <section className="relative bg-gradient-to-b from-primary-blue via-primary-ocean to-primary-blue text-white overflow-hidden min-h-[70vh] md:min-h-[85vh] flex items-center">
+          {/* Ocean Background with Ships */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a4a6e] via-[#0284c7] to-[#0c4a6e]">
+            {/* Ocean waves effect */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-primary-blue/50 to-transparent"></div>
+            </div>
+            
+            {/* Ships illustration - using CSS */}
+            <div className="absolute inset-0 overflow-hidden">
+              {/* Ship 1 - Large container ship */}
+              <div className="absolute bottom-[15%] left-[10%] w-32 md:w-48 opacity-80">
+                <div className="relative">
+                  <div className="w-full h-8 bg-orange-500 rounded-t-lg"></div>
+                  <div className="w-full h-16 bg-gray-300 mt-2 rounded"></div>
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-2 h-12 bg-gray-400"></div>
+                  <div className="absolute top-2 left-2 w-8 h-6 bg-blue-600 rounded"></div>
+                  <div className="absolute top-2 right-2 w-8 h-6 bg-blue-600 rounded"></div>
+                </div>
+              </div>
+              
+              {/* Ship 2 - Medium container ship */}
+              <div className="absolute bottom-[12%] right-[15%] w-24 md:w-40 opacity-70">
+                <div className="relative">
+                  <div className="w-full h-6 bg-gray-400 rounded-t-lg"></div>
+                  <div className="w-full h-12 bg-gray-200 mt-1 rounded"></div>
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1.5 h-10 bg-gray-500"></div>
+                  <div className="absolute top-1 left-1 w-6 h-4 bg-blue-500 rounded"></div>
+                </div>
+              </div>
+              
+              {/* Ship 3 - Small ship in background */}
+              <div className="absolute bottom-[18%] left-[40%] w-16 md:w-28 opacity-60">
+                <div className="relative">
+                  <div className="w-full h-5 bg-white rounded-t-lg"></div>
+                  <div className="w-full h-10 bg-gray-100 mt-1 rounded"></div>
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-8 bg-gray-300"></div>
+                </div>
+              </div>
+              
+              {/* Ship 4 - Far background */}
+              <div className="absolute bottom-[20%] right-[35%] w-12 md:w-24 opacity-50">
+                <div className="relative">
+                  <div className="w-full h-4 bg-white rounded-t"></div>
+                  <div className="w-full h-8 bg-gray-100 mt-1 rounded"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="container mx-auto px-4 py-20 md:py-32 relative z-10">
-            <div className="max-w-5xl mx-auto text-center">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full mb-8 border border-white/30">
-                <Sparkles className="w-4 h-4" />
-                <span className="text-sm font-semibold">
-                  {locale === "tr" ? "Sektörün Lider Tedarikçisi" : "Industry Leading Supplier"}
-                </span>
-              </div>
-
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <div className="max-w-6xl mx-auto text-center">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight text-white drop-shadow-lg">
                 <span className="block">{content.hero.title}</span>
-                <span className="block bg-gradient-to-r from-primary-light to-white bg-clip-text text-transparent">
-                  {content.hero.subtitle}
-                </span>
+                <span className="block mt-2">{content.hero.subtitle}</span>
               </h1>
               
-              <p className="text-xl md:text-2xl text-primary-light mb-12 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
                 {content.hero.description}
               </p>
 
-              {/* Feature Pills */}
-              <div className="flex flex-wrap justify-center gap-4 mb-12">
-                <div className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all">
-                  <Fish className="w-5 h-5" />
-                  <span className="font-semibold">{content.hero.features.protein}</span>
-                </div>
-                <div className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all">
-                  <Award className="w-5 h-5" />
-                  <span className="font-semibold">{content.hero.features.certified}</span>
-                </div>
-                <div className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all">
-                  <Truck className="w-5 h-5" />
-                  <span className="font-semibold">{content.hero.features.delivery}</span>
-                </div>
-                <div className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all">
-                  <Globe className="w-5 h-5" />
-                  <span className="font-semibold">{content.hero.features.global}</span>
-                </div>
-              </div>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {/* CTA Button */}
+              <div className="flex justify-center">
                 <Link href={`/${locale}/contact`}>
-                  <Button variant="secondary" size="lg" className="text-lg px-8 py-6 shadow-2xl hover:shadow-3xl transition-all hover:scale-105">
+                  <Button variant="secondary" size="lg" className="text-lg px-10 py-6 shadow-2xl hover:shadow-3xl transition-all hover:scale-105">
                     {content.hero.cta}
                     <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
-                </Link>
-                <Link href={`/${locale}/products`}>
-                  <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-2 border-white/30 bg-white/10 backdrop-blur-sm hover:bg-white/20">
-                    {content.hero.ctaSecondary}
                   </Button>
                 </Link>
               </div>
