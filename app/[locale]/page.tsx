@@ -7,8 +7,13 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { i18nConfig } from "@/lib/i18n/config";
 
-export function generateStaticParams() {
-  return i18nConfig.locales.map((locale) => ({ locale }));
+// Force dynamic rendering to avoid static generation issues
+export const dynamic = 'force-dynamic';
+
+export async function generateStaticParams() {
+  return i18nConfig.locales.map((locale) => ({
+    locale: locale,
+  }));
 }
 
 export async function generateMetadata({
