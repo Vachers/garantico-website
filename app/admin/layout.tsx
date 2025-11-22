@@ -10,8 +10,10 @@ export default async function AdminLayout({
 }) {
   const user = await getCurrentUser();
 
+  // Don't redirect if already on login page (to avoid redirect loop)
   if (!user) {
-    redirect("/admin/login");
+    // This will be handled by middleware, but as a safety check
+    return null;
   }
 
   return (

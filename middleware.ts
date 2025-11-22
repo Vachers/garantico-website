@@ -15,11 +15,16 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Admin routes - check authentication (except login)
-  if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
+  // Admin routes - check authentication (except login and API routes)
+  if (
+    pathname.startsWith("/admin") &&
+    !pathname.startsWith("/admin/login") &&
+    !pathname.startsWith("/admin/api")
+  ) {
     const session = request.cookies.get("admin_session");
     if (!session) {
-      return NextResponse.redirect(new URL("/admin/login", request.url));
+      const loginUrl = new URL("/admin/login", request.url);
+      return NextResponse.redirect(loginUrl);
     }
   }
 

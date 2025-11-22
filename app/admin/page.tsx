@@ -9,6 +9,7 @@ import { FileText, Package, Users, MessageSquare } from "lucide-react";
 export default async function AdminDashboard() {
   const user = await getCurrentUser();
 
+  // Middleware handles authentication, but double-check here
   if (!user) {
     redirect("/admin/login");
   }
