@@ -27,6 +27,7 @@ export default function InquiriesPage() {
 
   useEffect(() => {
     fetchInquiries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   const fetchInquiries = async () => {

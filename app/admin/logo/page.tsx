@@ -114,26 +114,27 @@ export default function LogoManagementPage() {
                 id="logo-upload"
                 disabled={uploading}
               />
-              <label htmlFor="logo-upload">
-                <Button
-                  variant="outline"
-                  size="md"
-                  as="span"
-                  disabled={uploading}
-                  className="cursor-pointer"
-                >
-                  {uploading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Yükleniyor...
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="w-4 h-4 mr-2" />
-                      Logo Seç
-                    </>
-                  )}
-                </Button>
+              <label htmlFor="logo-upload" className="cursor-pointer">
+                <span className="inline-block">
+                  <Button
+                    variant="outline"
+                    size="md"
+                    disabled={uploading}
+                    type="button"
+                  >
+                    {uploading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Yükleniyor...
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="w-4 h-4 mr-2" />
+                        Logo Seç
+                      </>
+                    )}
+                  </Button>
+                </span>
               </label>
             </div>
           </div>
