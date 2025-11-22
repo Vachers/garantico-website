@@ -5,3 +5,7 @@ export default function RootPage() {
   redirect(`/${i18nConfig.defaultLocale}`);
 }
 
+export const metadata = {
+  title: "GarantiCo - Redirecting...",
+};
+
