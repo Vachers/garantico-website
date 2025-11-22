@@ -1,0 +1,93 @@
+{
+  "common": {
+    "home": "Home",
+    "about": "About",
+    "products": "Products",
+    "contact": "Contact",
+    "getQuote": "Get Quote",
+    "learnMore": "Learn More",
+    "readMore": "Read More",
+    "close": "Close",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "home": {
+    "hero": {
+      "title": "Quality Fish Meal and Feed Raw Materials Supplier",
+      "subtitle": "European Quality Fish Meal and Feed Raw Materials",
+      "description": "Reliable Supply with 20+ Years of Experience",
+      "cta": "Get Fish Meal Price Quote",
+      "features": {
+        "protein": "Fish Meal with 65%+ Protein",
+        "certified": "Certified Quality Assurance",
+        "delivery": "Fast Delivery Network"
+      }
+    },
+    "products": {
+      "title": "Our Products",
+      "subtitle": "At your service with our wide product range"
+    },
+    "certificates": {
+      "title": "Quality Certificates and Certifications",
+      "subtitle": "Certified quality assurance"
+    }
+  },
+  "products": {
+    "title": "Our Products",
+    "filter": {
+      "all": "All",
+      "protein": "Protein Sources",
+      "plant": "Plant-based Raw Materials",
+      "oils": "Oils",
+      "additives": "Additives"
+    },
+    "fishMeal": {
+      "title": "Fish Meal",
+      "description": "Premium quality fish meal",
+      "specifications": {
+        "title": "Technical Specifications",
+        "protein": "Protein: Min 65%",
+        "ash": "Ash: Max 15%",
+        "moisture": "Moisture: Max 10%",
+        "salt": "Salt: Max 4%"
+      },
+      "packaging": "Packaging Options",
+      "certificates": "Certificates",
+      "usage": "Usage Areas"
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "story": {
+      "title": "Our Company Story",
+      "content": "With 20+ years of experience in the feed raw materials industry..."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "content": "Quality feed raw materials supply"
+    },
+    "vision": {
+      "title": "Our Vision",
+      "content": "The reliable partner of the industry"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "form": {
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "company": "Company",
+      "product": "Product",
+      "quantity": "Quantity",
+      "delivery": "Delivery Location",
+      "message": "Message",
+      "submit": "Submit"
+    },
+    "whatsapp": "Quick Price via WhatsApp",
+    "address": "Address"
+  }
+}
+

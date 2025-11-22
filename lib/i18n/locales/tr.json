@@ -1,0 +1,93 @@
+{
+  "common": {
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "products": "Ürünlerimiz",
+    "contact": "İletişim",
+    "getQuote": "Teklif Al",
+    "learnMore": "Daha Fazla Bilgi",
+    "readMore": "Devamını Oku",
+    "close": "Kapat",
+    "submit": "Gönder",
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı"
+  },
+  "home": {
+    "hero": {
+      "title": "Kaliteli Balık Unu ve Yem Hammaddeleri Tedarikçiniz",
+      "subtitle": "Avrupa Kalitesinde Balık Unu ve Yem Hammaddeleri",
+      "description": "20+ Yıllık Deneyimle Güvenilir Tedarik",
+      "cta": "Balık Unu Fiyat Teklifi Al",
+      "features": {
+        "protein": "%65+ Protein Oranında Balık Unu",
+        "certified": "Sertifikalı Kalite Güvencesi",
+        "delivery": "Hızlı Teslimat Ağı"
+      }
+    },
+    "products": {
+      "title": "Ürünlerimiz",
+      "subtitle": "Geniş ürün yelpazemizle hizmetinizdeyiz"
+    },
+    "certificates": {
+      "title": "Kalite Belgeleri ve Sertifikalar",
+      "subtitle": "Sertifikalı kalite güvencesi"
+    }
+  },
+  "products": {
+    "title": "Ürünlerimiz",
+    "filter": {
+      "all": "Tümü",
+      "protein": "Protein Kaynakları",
+      "plant": "Bitkisel Hammaddeler",
+      "oils": "Yağlar",
+      "additives": "Katkılar"
+    },
+    "fishMeal": {
+      "title": "Balık Unu",
+      "description": "Premium kalite balık unu",
+      "specifications": {
+        "title": "Teknik Özellikler",
+        "protein": "Protein: Min %65",
+        "ash": "Ham kül: Max %15",
+        "moisture": "Nem: Max %10",
+        "salt": "Tuz: Max %4"
+      },
+      "packaging": "Ambalaj Seçenekleri",
+      "certificates": "Sertifikalar",
+      "usage": "Kullanım Alanları"
+    }
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "story": {
+      "title": "Şirket Hikayemiz",
+      "content": "Yem hammaddeleri sektöründe 20+ yıllık deneyimimizle..."
+    },
+    "mission": {
+      "title": "Misyonumuz",
+      "content": "Kaliteli yem hammaddeleri tedariki"
+    },
+    "vision": {
+      "title": "Vizyonumuz",
+      "content": "Sektörün güvenilir partneri"
+    }
+  },
+  "contact": {
+    "title": "İletişim",
+    "form": {
+      "name": "Ad Soyad",
+      "email": "E-posta",
+      "phone": "Telefon",
+      "company": "Şirket",
+      "product": "Ürün",
+      "quantity": "Miktar",
+      "delivery": "Teslimat Lokasyonu",
+      "message": "Mesaj",
+      "submit": "Gönder"
+    },
+    "whatsapp": "WhatsApp'tan Hızlı Fiyat",
+    "address": "Adres"
+  }
+}
+
