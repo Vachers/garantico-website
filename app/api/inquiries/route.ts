@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       message: validatedData.message || null,
       language: validatedData.language,
       status: "pending",
-    });
+    }).returning();
 
     return NextResponse.json(
       {

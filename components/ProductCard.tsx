@@ -5,6 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Package, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface ProductCardProps {
   id: number;
@@ -41,11 +42,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <Card hover className={isFeatured ? "ring-2 ring-primary-ocean" : ""}>
       {imageUrl && (
-        <div className="w-full h-48 bg-gray-200 rounded-t-lg mb-4 overflow-hidden">
-          <img
+        <div className="w-full h-48 bg-gray-200 rounded-t-lg mb-4 overflow-hidden relative">
+          <Image
             src={imageUrl}
             alt={name}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
         </div>
       )}
