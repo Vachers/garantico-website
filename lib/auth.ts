@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { db } from "./db";
 import { adminUsers } from "./db/schema";
 import { eq } from "drizzle-orm";
-import bcrypt from "bcryptjs";
+import * as bcrypt from "bcryptjs";
 
 const SESSION_COOKIE = "admin_session";
 const SESSION_SECRET = process.env.SESSION_SECRET || "your-secret-key-change-in-production";

@@ -1,7 +1,9 @@
-import { User } from "@/lib/db/schema";
+import { adminUsers } from "@/lib/db/schema";
+
+type AdminUser = typeof adminUsers.$inferSelect;
 
 interface AdminHeaderProps {
-  user: User;
+  user: AdminUser;
 }
 
 export function AdminHeader({ user }: AdminHeaderProps) {
