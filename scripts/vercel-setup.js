@@ -84,6 +84,24 @@ async function getOrCreateProject(token, projectName = 'garantico-website') {
 
 async function setEnvironmentVariable(token, projectId, key, value, environments = ['production', 'preview', 'development']) {
   try {
+    // First, check if variable exists
+    const envVars = await makeVercelRequest('GET', `/v9/projects/${projectId}/env`, null, token);
+    const existing = envVars.envs?.find(e => e.key === key);
+    
+    if (existing) {
+      // Update existing variable
+      console.log(`⚠ ${key} already exists, updating...`);
+      for (const env of environments) {
+        try {
+          // Delete existing
+          await makeVercelRequest('DELETE', `/v9/projects/${projectId}/env/${existing.id}`, null, token);
+        } catch (e) {
+          // Ignore if already deleted
+        }
+      }
+    }
+    
+    // Create new variable for each environment
     for (const env of environments) {
       await makeVercelRequest('POST', `/v9/projects/${projectId}/env`, {
         key,
@@ -95,23 +113,9 @@ async function setEnvironmentVariable(token, projectId, key, value, environments
     }
     return true;
   } catch (error) {
-    // If variable already exists, try to update it
-    if (error.message.includes('409') || error.message.includes('already exists')) {
-      console.log(`⚠ ${key} already exists, updating...`);
-      try {
-        // Get existing env vars
-        const envVars = await makeVercelRequest('GET', `/v9/projects/${projectId}/env`, null, token);
-        const existing = envVars.envs?.find(e => e.key === key);
-        
-        if (existing) {
-          // Delete and recreate
-          await makeVercelRequest('DELETE', `/v9/projects/${projectId}/env/${existing.id}`, null, token);
-          return setEnvironmentVariable(token, projectId, key, value, environments);
-        }
-      } catch (updateError) {
-        console.error(`✗ Failed to update ${key}:`, updateError.message);
-        return false;
-      }
+    if (error.message.includes('ENV_ALREADY_EXISTS') || error.message.includes('409')) {
+      console.log(`⚠ ${key} already exists for some environments, skipping...`);
+      return true; // Not a critical error
     } else {
       console.error(`✗ Failed to set ${key}:`, error.message);
       return false;

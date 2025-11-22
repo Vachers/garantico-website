@@ -30,6 +30,14 @@ async function makeRequest(method, path, data = null, apiKey) {
       });
       res.on('end', () => {
         try {
+          if (!body || body.trim() === '') {
+            if (res.statusCode >= 200 && res.statusCode < 300) {
+              resolve({});
+            } else {
+              reject(new Error(`API Error: ${res.statusCode} - Empty response`));
+            }
+            return;
+          }
           const parsed = JSON.parse(body);
           if (res.statusCode >= 200 && res.statusCode < 300) {
             resolve(parsed);
@@ -37,7 +45,7 @@ async function makeRequest(method, path, data = null, apiKey) {
             reject(new Error(`API Error: ${res.statusCode} - ${JSON.stringify(parsed)}`));
           }
         } catch (e) {
-          reject(new Error(`Parse Error: ${body}`));
+          reject(new Error(`Parse Error: ${body.substring(0, 200)}`));
         }
       });
     });
@@ -52,18 +60,66 @@ async function makeRequest(method, path, data = null, apiKey) {
   });
 }
 
-async function createProject(apiKey, projectName = 'garantico-db') {
+async function getOrganizations(apiKey) {
   try {
+    const response = await makeRequest('GET', '/organizations', null, apiKey);
+    return response.organizations || response || [];
+  } catch (error) {
+    console.error('✗ Failed to get organizations:', error.message);
+    // Try to continue with a default org_id if we can't get organizations
+    return [];
+  }
+}
+
+async function getProjects(apiKey) {
+  try {
+    const response = await makeRequest('GET', '/projects', null, apiKey);
+    return response.projects || response || [];
+  } catch (error) {
+    console.error('✗ Failed to get projects:', error.message);
+    return [];
+  }
+}
+
+async function createProject(apiKey, projectName = 'garantico-db', orgId = null) {
+  try {
+    // First, check if project already exists
+    console.log('Checking for existing projects...');
+    const existingProjects = await getProjects(apiKey);
+    const existing = Array.isArray(existingProjects) 
+      ? existingProjects.find(p => p.name === projectName || p.project?.name === projectName)
+      : null;
+    
+    if (existing) {
+      const project = existing.project || existing;
+      console.log(`✓ Found existing project: ${project.name} (${project.id})`);
+      return project;
+    }
+
+    // If orgId not provided, get first organization
+    if (!orgId) {
+      console.log('Fetching organizations...');
+      const orgs = await getOrganizations(apiKey);
+      if (orgs.length === 0) {
+        throw new Error('No organizations found. Please create an organization first in NeonDB dashboard.');
+      }
+      orgId = orgs[0].id || orgs[0].organization?.id;
+      const orgName = orgs[0].name || orgs[0].organization?.name || 'Unknown';
+      console.log(`✓ Using organization: ${orgName} (${orgId})`);
+    }
+
     console.log('Creating NeonDB project...');
     const response = await makeRequest('POST', '/projects', {
       project: {
         name: projectName,
         region_id: 'aws-eu-central-1', // Default to EU region
+        org_id: orgId,
       },
     }, apiKey);
 
-    console.log('✓ Project created:', response.project.id);
-    return response.project;
+    const project = response.project || response;
+    console.log('✓ Project created:', project.id);
+    return project;
   } catch (error) {
     console.error('✗ Failed to create project:', error.message);
     throw error;
@@ -130,6 +186,9 @@ async function main() {
     return connectionString;
   } catch (error) {
     console.error('\n✗ Setup failed:', error.message);
+    if (error.message.includes('org_id')) {
+      console.log('\n💡 Tip: Organization ID is required. The script will try to get it automatically.');
+    }
     process.exit(1);
   }
 }
