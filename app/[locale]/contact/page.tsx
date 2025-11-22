@@ -5,6 +5,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { MapPin, Phone, Mail, MessageCircle } from "lucide-react";
 
+// Note: generateStaticParams doesn't work with "use client" components
+// This page will be dynamically rendered
 export default function ContactPage({ params }: { params: { locale: string } }) {
   const locale = params.locale || "tr";
 

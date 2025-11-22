@@ -1,5 +1,10 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import { Award, Target, Eye, Users, Warehouse, CheckCircle } from "lucide-react";
+import { i18nConfig } from "@/lib/i18n/config";
+
+export function generateStaticParams() {
+  return i18nConfig.locales.map((locale) => ({ locale }));
+}
 
 export default function AboutPage({ params }: { params: { locale: string } }) {
   const locale = params.locale || "tr";

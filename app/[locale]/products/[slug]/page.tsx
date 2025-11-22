@@ -4,6 +4,16 @@ import { Button } from "@/components/ui/Button";
 import { Package, Award, CheckCircle, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { i18nConfig } from "@/lib/i18n/config";
+
+export function generateStaticParams() {
+  const locales = i18nConfig.locales;
+  const slugs = ["balik-unu", "fish-meal", "tavuk-unu", "soya-kuspesi"];
+  
+  return locales.flatMap((locale) =>
+    slugs.map((slug) => ({ locale, slug }))
+  );
+}
 
 export async function generateMetadata({
   params,

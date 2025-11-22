@@ -5,6 +5,11 @@ import { Button } from "@/components/ui/Button";
 import { Fish, Award, Truck } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { i18nConfig } from "@/lib/i18n/config";
+
+export function generateStaticParams() {
+  return i18nConfig.locales.map((locale) => ({ locale }));
+}
 
 export async function generateMetadata({
   params,
