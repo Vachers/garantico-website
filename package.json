@@ -11,7 +11,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "vercel:env": "node scripts/vercel-env.js"
+    "vercel:env": "node scripts/vercel-env.js",
+    "admin:create": "node scripts/create-admin-user.js"
   },
   "dependencies": {
     "react": "^18.3.1",
