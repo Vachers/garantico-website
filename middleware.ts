@@ -15,12 +15,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Admin routes - check authentication (except login and API routes)
-  if (
-    pathname.startsWith("/admin") &&
-    !pathname.startsWith("/admin/login") &&
-    !pathname.startsWith("/admin/api")
-  ) {
+  // Admin routes - check authentication (except login)
+  if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
     const session = request.cookies.get("admin_session");
     if (!session) {
       const loginUrl = new URL("/admin/login", request.url);
@@ -30,7 +26,10 @@ export function middleware(request: NextRequest) {
 
   // Skip i18n redirect for admin routes
   if (pathname.startsWith("/admin")) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    // Add pathname to headers for layout to check
+    response.headers.set("x-pathname", pathname);
+    return response;
   }
 
   const pathnameIsMissingLocale = i18nConfig.locales.every(
