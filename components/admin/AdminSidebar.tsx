@@ -32,7 +32,7 @@ export function AdminSidebar() {
   };
 
   return (
-    <aside className="w-64 bg-white shadow-lg min-h-screen">
+    <aside className="w-64 bg-white shadow-lg min-h-screen sticky top-0">
       <div className="p-6 border-b">
         <h2 className="text-xl font-bold text-primary-blue">GarantiCo Admin</h2>
       </div>
@@ -57,7 +57,7 @@ export function AdminSidebar() {
           );
         })}
       </nav>
-      <div className="absolute bottom-0 w-64 p-4 border-t">
+      <div className="absolute bottom-0 w-64 p-4 border-t bg-white">
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 px-4 py-3 rounded-lg text-text-dark hover:bg-red-50 hover:text-red-600 w-full transition-colors"
