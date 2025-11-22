@@ -6,6 +6,7 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { MobileMenu } from "@/components/MobileMenu";
 import Link from "next/link";
 import { i18nConfig } from "@/lib/i18n/config";
+import { Search, Globe } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -73,92 +74,142 @@ export default function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <nav className="bg-primary-blue sticky top-0 z-50 shadow-lg">
+        {/* Top Bar - Thin teal bar */}
+        <div className="bg-primary-ocean text-white text-sm py-2">
           <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between h-16 md:h-20">
-              <Link href={`/${locale}`} className="text-xl md:text-2xl font-bold text-white">
-                GarantiCo
-              </Link>
-              <div className="hidden md:flex items-center gap-8">
-                <Link
-                  href={`/${locale}`}
-                  className="text-white hover:text-primary-light transition-colors font-medium"
-                >
-                  {locale === "tr" ? "Ana Sayfa" : "Home"}
-                </Link>
-                <Link
-                  href={`/${locale}/about`}
-                  className="text-white hover:text-primary-light transition-colors font-medium"
-                >
-                  {locale === "tr" ? "Hakkımızda" : "About"}
-                </Link>
-                <Link
-                  href={`/${locale}/products`}
-                  className="text-white hover:text-primary-light transition-colors font-medium"
-                >
-                  {locale === "tr" ? "Ürünlerimiz" : "Products"}
-                </Link>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-6">
+                <span className="font-medium">
+                  {locale === "tr" ? "Dünya İçin, Yaşam İçin" : "For Earth, For Life"}
+                </span>
+              </div>
+              <div className="flex items-center gap-6">
+                <LanguageSwitcher />
                 <Link
                   href={`/${locale}/contact`}
-                  className="text-white hover:text-primary-light transition-colors font-medium"
+                  className="hover:text-primary-light transition-colors"
                 >
                   {locale === "tr" ? "İletişim" : "Contact"}
                 </Link>
-                <div className="w-px h-6 bg-white/30"></div>
-                <LanguageSwitcher />
-                <div className="w-px h-6 bg-white/30"></div>
+                <button className="hover:text-primary-light transition-colors">
+                  <Search className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Navigation */}
+        <nav className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between h-20">
+              <Link href={`/${locale}`} className="text-2xl font-bold text-primary-blue">
+                GarantiCo
+              </Link>
+              <div className="hidden lg:flex items-center gap-8">
+                <Link
+                  href={`/${locale}`}
+                  className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
+                >
+                  {locale === "tr" ? "Keşfet" : "Discover"}
+                </Link>
+                <Link
+                  href={`/${locale}/about`}
+                  className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
+                >
+                  {locale === "tr" ? "Kurumsal" : "Corporate"}
+                </Link>
+                <Link
+                  href={`/${locale}/products`}
+                  className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
+                >
+                  {locale === "tr" ? "Ürünler" : "Products"}
+                </Link>
                 <Link
                   href={`/${locale}/contact`}
-                  className="px-4 py-2 text-white hover:text-primary-light transition-colors font-medium"
+                  className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
                 >
-                  {locale === "tr" ? "İletişime Geçin" : "Contact Us"}
+                  {locale === "tr" ? "İletişim" : "Contact"}
                 </Link>
               </div>
               <MobileMenu locale={locale} />
             </div>
           </div>
         </nav>
+
         <main>{children}</main>
-        <footer className="bg-primary-blue text-white py-8 mt-16">
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-3 gap-8">
+
+        {/* Footer */}
+        <footer className="bg-primary-blue text-white">
+          <div className="container mx-auto px-4 py-12">
+            <div className="grid md:grid-cols-4 gap-8 mb-8">
               <div>
                 <h3 className="text-xl font-bold mb-4">GarantiCo</h3>
-                <p className="text-primary-light">
-                  Kaliteli balık unu ve yem hammaddeleri tedarikçiniz
+                <p className="text-primary-light text-sm">
+                  {locale === "tr"
+                    ? "Kaliteli balık unu ve yem hammaddeleri tedarikçiniz"
+                    : "Quality fish meal and feed raw materials supplier"}
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold mb-4">Hızlı Linkler</h4>
-                <ul className="space-y-2 text-primary-light">
+                <h4 className="font-semibold mb-4 text-sm">
+                  {locale === "tr" ? "Keşfet" : "Discover"}
+                </h4>
+                <ul className="space-y-2 text-primary-light text-sm">
                   <li>
                     <Link href={`/${locale}`} className="hover:text-white">
-                      Ana Sayfa
+                      {locale === "tr" ? "Ana Sayfa" : "Home"}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href={`/${locale}/about`} className="hover:text-white">
+                      {locale === "tr" ? "Hakkımızda" : "About"}
                     </Link>
                   </li>
                   <li>
                     <Link href={`/${locale}/products`} className="hover:text-white">
-                      Ürünlerimiz
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href={`/${locale}/contact`} className="hover:text-white">
-                      İletişim
+                      {locale === "tr" ? "Ürünler" : "Products"}
                     </Link>
                   </li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold mb-4">İletişim</h4>
-                <p className="text-primary-light">
-                  Email: info@garantico.com
-                  <br />
-                  Tel: +90 555 123 45 67
-                </p>
+                <h4 className="font-semibold mb-4 text-sm">
+                  {locale === "tr" ? "Kurumsal" : "Corporate"}
+                </h4>
+                <ul className="space-y-2 text-primary-light text-sm">
+                  <li>
+                    <Link href={`/${locale}/about`} className="hover:text-white">
+                      {locale === "tr" ? "Hakkımızda" : "About Us"}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href={`/${locale}/contact`} className="hover:text-white">
+                      {locale === "tr" ? "İletişim" : "Contact"}
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-4 text-sm">
+                  {locale === "tr" ? "Yasal" : "Legal"}
+                </h4>
+                <ul className="space-y-2 text-primary-light text-sm">
+                  <li>
+                    <Link href="#" className="hover:text-white">
+                      {locale === "tr" ? "Kullanım Şartları" : "Terms of Use"}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="#" className="hover:text-white">
+                      {locale === "tr" ? "Gizlilik Politikası" : "Privacy Policy"}
+                    </Link>
+                  </li>
+                </ul>
               </div>
             </div>
-            <div className="border-t border-primary-ocean mt-8 pt-8 text-center text-primary-light">
-              <p>&copy; 2024 GarantiCo. Tüm hakları saklıdır.</p>
+            <div className="border-t border-primary-ocean pt-8 text-center text-primary-light text-sm">
+              <p>&copy; 2024 GarantiCo. {locale === "tr" ? "Tüm hakları saklıdır." : "All rights reserved."}</p>
             </div>
           </div>
         </footer>
@@ -167,4 +218,3 @@ export default function LocaleLayout({
     </html>
   );
 }
-
