@@ -8,12 +8,19 @@ interface CardProps {
   variant?: "default" | "elevated" | "outlined";
 }
 
-export const Card: React.FC<CardProps> = ({ children, className, hover = false }) => {
+export const Card: React.FC<CardProps> = ({ children, className, hover = false, variant = "default" }) => {
+  const variants = {
+    default: "bg-white shadow-md border border-gray-200",
+    elevated: "bg-white shadow-xl border border-gray-100",
+    outlined: "bg-white border-2 border-gray-200",
+  };
+
   return (
     <div
       className={cn(
-        "bg-white rounded-lg shadow-md p-6 border border-gray-200",
-        hover && "hover:shadow-lg transition-shadow duration-200",
+        "rounded-xl p-6",
+        variants[variant],
+        hover && "hover:shadow-xl transition-all duration-300 hover:-translate-y-1",
         className
       )}
     >
