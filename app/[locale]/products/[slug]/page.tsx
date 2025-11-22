@@ -6,6 +6,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { i18nConfig } from "@/lib/i18n/config";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
   const locales = i18nConfig.locales;
   const slugs = ["balik-unu", "fish-meal", "tavuk-unu", "soya-kuspesi"];

@@ -2,6 +2,9 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import { Award, Target, Eye, Users, Warehouse, CheckCircle } from "lucide-react";
 import { i18nConfig } from "@/lib/i18n/config";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
   return i18nConfig.locales.map((locale) => ({
     locale: locale,
