@@ -61,3 +61,21 @@ export const pageContents = pgTable("page_contents", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Admin users table
+export const adminUsers = pgTable("admin_users", {
+  id: serial("id").primaryKey(),
+  username: varchar("username", { length: 100 }).notNull().unique(),
+  password: varchar("password", { length: 255 }).notNull(), // Hashed password
+  createdAt: timestamp("created_at").defaultNow(),
+  lastLogin: timestamp("last_login"),
+});
+
+// Site settings table
+export const siteSettings = pgTable("site_settings", {
+  id: serial("id").primaryKey(),
+  key: varchar("key", { length: 100 }).notNull().unique(),
+  value: text("value"),
+  type: varchar("type", { length: 50 }).default("text"), // text, image, json
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
