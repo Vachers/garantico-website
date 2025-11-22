@@ -15,6 +15,7 @@ const { getOrCreateProject, setEnvironmentVariable } = require('./vercel-setup')
 
 async function setupNeonDB() {
   const apiKey = process.env.NEON_API_KEY;
+  const orgId = process.env.NEON_ORG_ID;
   
   if (!apiKey) {
     console.log('⚠ NEON_API_KEY not found. Skipping NeonDB setup.');
@@ -24,7 +25,16 @@ async function setupNeonDB() {
 
   try {
     console.log('\n📦 Setting up NeonDB...\n');
-    const project = await createProject(apiKey, 'garantico-db');
+    
+    if (orgId) {
+      console.log(`✓ Using organization ID: ${orgId}`);
+    } else {
+      console.log('⚠ NEON_ORG_ID not set. Will try to fetch from API...');
+      console.log('   If it fails, get org_id from NeonDB dashboard URL and set:');
+      console.log('   export NEON_ORG_ID=your_org_id');
+    }
+    
+    const project = await createProject(apiKey, 'garantico-db', orgId);
     const branch = await createBranch(apiKey, project.id);
     const connectionString = await getConnectionString(apiKey, project.id, branch.id);
     
@@ -32,6 +42,14 @@ async function setupNeonDB() {
     return connectionString;
   } catch (error) {
     console.error('✗ NeonDB setup failed:', error.message);
+    if (error.message.includes('org_id')) {
+      console.log('\n💡 To fix this:');
+      console.log('1. Go to https://console.neon.tech');
+      console.log('2. Open any project');
+      console.log('3. Check the URL for org_id parameter');
+      console.log('4. Set it as: export NEON_ORG_ID=your_org_id');
+      console.log('5. Run the script again');
+    }
     return null;
   }
 }

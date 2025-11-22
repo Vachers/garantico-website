@@ -62,11 +62,32 @@ async function makeRequest(method, path, data = null, apiKey) {
 
 async function getOrganizations(apiKey) {
   try {
-    const response = await makeRequest('GET', '/organizations', null, apiKey);
-    return response.organizations || response || [];
+    // Try different API endpoints
+    const endpoints = [
+      '/organizations',
+      '/organization',
+      '/me/organizations',
+    ];
+    
+    for (const endpoint of endpoints) {
+      try {
+        const response = await makeRequest('GET', endpoint, null, apiKey);
+        const orgs = response.organizations || response.organization || response || [];
+        if (Array.isArray(orgs) && orgs.length > 0) {
+          return orgs;
+        }
+        if (orgs && !Array.isArray(orgs)) {
+          return [orgs];
+        }
+      } catch (e) {
+        // Try next endpoint
+        continue;
+      }
+    }
+    
+    return [];
   } catch (error) {
     console.error('✗ Failed to get organizations:', error.message);
-    // Try to continue with a default org_id if we can't get organizations
     return [];
   }
 }
@@ -96,16 +117,29 @@ async function createProject(apiKey, projectName = 'garantico-db', orgId = null)
       return project;
     }
 
-    // If orgId not provided, get first organization
+    // If orgId not provided, try to get it
     if (!orgId) {
-      console.log('Fetching organizations...');
-      const orgs = await getOrganizations(apiKey);
-      if (orgs.length === 0) {
-        throw new Error('No organizations found. Please create an organization first in NeonDB dashboard.');
+      // First, try environment variable
+      orgId = process.env.NEON_ORG_ID;
+      if (orgId) {
+        console.log(`✓ Using organization ID from environment: ${orgId}`);
+      } else {
+        // Try to fetch from API
+        console.log('Fetching organizations...');
+        const orgs = await getOrganizations(apiKey);
+        if (orgs.length > 0) {
+          orgId = orgs[0].id || orgs[0].organization?.id || orgs[0].org_id;
+          const orgName = orgs[0].name || orgs[0].organization?.name || orgs[0].name || 'Unknown';
+          console.log(`✓ Using organization: ${orgName} (${orgId})`);
+        } else {
+          throw new Error(
+            'No organizations found. Please:\n' +
+            '1. Get your organization ID from NeonDB dashboard URL (org_id parameter)\n' +
+            '2. Set it as: export NEON_ORG_ID=your_org_id\n' +
+            '3. Or create an organization first in NeonDB dashboard.'
+          );
+        }
       }
-      orgId = orgs[0].id || orgs[0].organization?.id;
-      const orgName = orgs[0].name || orgs[0].organization?.name || 'Unknown';
-      console.log(`✓ Using organization: ${orgName} (${orgId})`);
     }
 
     console.log('Creating NeonDB project...');
