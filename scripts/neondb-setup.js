@@ -231,5 +231,54 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { createProject, createBranch, getConnectionString };
+function makeRequest(method, path, data = null, apiKey) {
+  return new Promise((resolve, reject) => {
+    const options = {
+      hostname: 'console.neon.tech',
+      path: `/api/v2${path}`,
+      method: method,
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const req = https.request(options, (res) => {
+      let body = '';
+      res.on('data', (chunk) => {
+        body += chunk;
+      });
+      res.on('end', () => {
+        try {
+          if (!body || body.trim() === '') {
+            if (res.statusCode >= 200 && res.statusCode < 300) {
+              resolve({});
+            } else {
+              reject(new Error(`API Error: ${res.statusCode} - Empty response`));
+            }
+            return;
+          }
+          const parsed = JSON.parse(body);
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            resolve(parsed);
+          } else {
+            reject(new Error(`API Error: ${res.statusCode} - ${JSON.stringify(parsed)}`));
+          }
+        } catch (e) {
+          reject(new Error(`Parse Error: ${body.substring(0, 200)}`));
+        }
+      });
+    });
+
+    req.on('error', reject);
+
+    if (data) {
+      req.write(JSON.stringify(data));
+    }
+
+    req.end();
+  });
+}
+
+module.exports = { createProject, createBranch, getConnectionString, makeRequest };
 
