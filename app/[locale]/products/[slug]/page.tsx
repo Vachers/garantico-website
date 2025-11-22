@@ -6,12 +6,15 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { i18nConfig } from "@/lib/i18n/config";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   const locales = i18nConfig.locales;
   const slugs = ["balik-unu", "fish-meal", "tavuk-unu", "soya-kuspesi"];
   
   return locales.flatMap((locale) =>
-    slugs.map((slug) => ({ locale, slug }))
+    slugs.map((slug) => ({
+      locale: locale,
+      slug: slug,
+    }))
   );
 }
 

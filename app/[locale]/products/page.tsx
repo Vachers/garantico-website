@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/Button";
 import { Filter } from "lucide-react";
 import { i18nConfig } from "@/lib/i18n/config";
 
-// Note: generateStaticParams doesn't work with "use client" components
-// This page will be dynamically rendered
+// Note: "use client" pages are dynamically rendered, no generateStaticParams needed
+export const dynamic = 'force-dynamic';
+
 export default function ProductsPage({ params }: { params: { locale: string } }) {
   const locale = params.locale || "tr";
   const [activeFilter, setActiveFilter] = useState<string>("all");

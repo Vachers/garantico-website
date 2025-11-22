@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  i18n: {
-    locales: ["tr", "en"],
-    defaultLocale: "tr",
-  },
+  // Disable static optimization for dynamic routes
+  // i18n is handled by middleware and App Router
+  output: undefined, // Remove standalone output
 };
 
 export default nextConfig;
