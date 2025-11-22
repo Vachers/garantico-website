@@ -2,25 +2,15 @@ import { getCurrentUser } from "@/lib/auth";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Check if we're on login page
-  const headersList = await headers();
-  const pathname = headersList.get("x-pathname") || "";
-  
-  // If on login page, don't check auth
-  if (pathname.includes("/admin/login")) {
-    return <>{children}</>;
-  }
-
   const user = await getCurrentUser();
 
-  // Only redirect if not authenticated
+  // If no user, redirect to login (middleware should handle this, but double-check)
   if (!user) {
     redirect("/admin/login");
   }
