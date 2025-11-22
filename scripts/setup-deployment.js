@@ -11,6 +11,7 @@
 
 const { execSync } = require('child_process');
 const { createProject, createBranch, getConnectionString } = require('./neondb-setup');
+const { getOrCreateProject, setEnvironmentVariable } = require('./vercel-setup');
 
 async function setupNeonDB() {
   const apiKey = process.env.NEON_API_KEY;
@@ -35,16 +36,48 @@ async function setupNeonDB() {
   }
 }
 
-function setupVercel(connectionString) {
+async function setupVercel(connectionString) {
   console.log('\n🚀 Setting up Vercel...\n');
 
+  const token = process.env.VERCEL_TOKEN;
+  
+  if (token) {
+    // Use API token method
+    try {
+      const project = await getOrCreateProject(token, 'garantico-website');
+      
+      const envVars = {
+        DATABASE_URL: connectionString || process.env.DATABASE_URL,
+        NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'https://garantico-website.vercel.app',
+        NEXT_PUBLIC_WHATSAPP_NUMBER: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+905551234567',
+      };
+
+      console.log('\n📝 Setting environment variables via API...\n');
+
+      for (const [key, value] of Object.entries(envVars)) {
+        if (value) {
+          await setEnvironmentVariable(token, project.id, key, value);
+        } else {
+          console.log(`⚠ Skipping ${key} (no value provided)`);
+        }
+      }
+
+      console.log('\n✓ Vercel setup complete via API!\n');
+      return;
+    } catch (error) {
+      console.error('✗ API setup failed, falling back to CLI:', error.message);
+    }
+  }
+
+  // Fallback to CLI method
   try {
+    console.log('Using Vercel CLI method...');
+    
     // Check if already linked
     let projectId;
     try {
       const linkOutput = execSync('vercel ls --json', { encoding: 'utf-8', stdio: 'pipe' });
       const projects = JSON.parse(linkOutput);
-      // Try to find existing project
       projectId = projects.find(p => p.name === 'garantico-website')?.id;
     } catch (e) {
       // Not linked yet
@@ -90,6 +123,7 @@ function setupVercel(connectionString) {
   } catch (error) {
     console.error('✗ Vercel setup failed:', error.message);
     console.log('\nMake sure you are logged in: vercel login');
+    console.log('Or set VERCEL_TOKEN environment variable');
   }
 }
 
@@ -101,7 +135,7 @@ async function main() {
   const connectionString = await setupNeonDB();
 
   // Step 2: Setup Vercel
-  setupVercel(connectionString);
+  await setupVercel(connectionString);
 
   console.log('\n✅ Setup complete!');
   console.log('\nNext steps:');
