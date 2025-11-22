@@ -2,7 +2,7 @@ import { ProductSpotlight } from "@/components/ProductSpotlight";
 import { QualityCertificates } from "@/components/QualityCertificates";
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/Button";
-import { Fish, Award, Truck } from "lucide-react";
+import { Fish, Award, Truck, TrendingUp, Users, Globe, CheckCircle2, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { i18nConfig } from "@/lib/i18n/config";
@@ -44,50 +44,86 @@ export default function HomePage({ params }: { params: { locale: string } }) {
   const t = {
     tr: {
       hero: {
-        title: "Kaliteli Balık Unu ve Yem Hammaddeleri Tedarikçiniz",
-        subtitle: "Avrupa Kalitesinde Balık Unu ve Yem Hammaddeleri",
-        description: "20+ Yıllık Deneyimle Güvenilir Tedarik",
-        cta: "Balık Unu Fiyat Teklifi Al",
+        title: "Kaliteli Balık Unu ve Yem Hammaddeleri",
+        subtitle: "Tedarikçiniz",
+        description: "20+ yıllık deneyimle, Avrupa kalitesinde balık unu ve yem hammaddeleri tedarikinde sektörün güvenilir ortağı",
+        cta: "Hemen Teklif Alın",
+        ctaSecondary: "Ürünlerimizi Keşfedin",
         features: {
-          protein: "%65+ Protein Oranında Balık Unu",
-          certified: "Sertifikalı Kalite Güvencesi",
-          delivery: "Hızlı Teslimat Ağı",
+          protein: "%65+ Protein",
+          certified: "Sertifikalı Kalite",
+          delivery: "Hızlı Teslimat",
+          global: "Global Tedarik",
         },
       },
       products: {
-        title: "Ürünlerimiz",
-        subtitle: "Geniş ürün yelpazemizle hizmetinizdeyiz",
-        viewAll: "Tümünü Gör",
+        title: "Ürün Portföyümüz",
+        subtitle: "Geniş ürün yelpazemizle ihtiyaçlarınıza en uygun çözümü sunuyoruz",
+        viewAll: "Tüm Ürünleri Görüntüle",
       },
       stats: {
         title: "Neden GarantiCo?",
-        experience: "20+ Yıl Deneyim",
+        subtitle: "Sektördeki lider konumumuzun göstergeleri",
+        experience: "20+ Yıl",
+        experienceLabel: "Sektör Deneyimi",
         products: "50+ Ürün",
-        customers: "500+ Müşteri",
+        productsLabel: "Ürün Çeşitliliği",
+        customers: "500+",
+        customersLabel: "Mutlu Müşteri",
+        countries: "30+ Ülke",
+        countriesLabel: "Global Ağ",
+      },
+      trust: {
+        title: "Güvenilir İş Ortağınız",
+        subtitle: "Kalite, güvenilirlik ve müşteri memnuniyeti odaklı hizmet anlayışımız",
+        points: [
+          "Sertifikalı kalite güvencesi",
+          "Rekabetçi fiyatlandırma",
+          "Zamanında teslimat",
+          "7/24 müşteri desteği",
+        ],
       },
     },
     en: {
       hero: {
-        title: "Quality Fish Meal and Feed Raw Materials Supplier",
-        subtitle: "European Quality Fish Meal and Feed Raw Materials",
-        description: "Reliable Supply with 20+ Years of Experience",
-        cta: "Get Fish Meal Price Quote",
+        title: "Quality Fish Meal and Feed Raw Materials",
+        subtitle: "Your Supplier",
+        description: "With 20+ years of experience, we are the trusted partner in supplying European quality fish meal and feed raw materials",
+        cta: "Get Quote Now",
+        ctaSecondary: "Explore Products",
         features: {
-          protein: "Fish Meal with 65%+ Protein",
-          certified: "Certified Quality Assurance",
-          delivery: "Fast Delivery Network",
+          protein: "65%+ Protein",
+          certified: "Certified Quality",
+          delivery: "Fast Delivery",
+          global: "Global Supply",
         },
       },
       products: {
-        title: "Our Products",
-        subtitle: "At your service with our wide product range",
-        viewAll: "View All",
+        title: "Our Product Portfolio",
+        subtitle: "We offer the most suitable solutions for your needs with our wide product range",
+        viewAll: "View All Products",
       },
       stats: {
         title: "Why GarantiCo?",
-        experience: "20+ Years Experience",
+        subtitle: "Indicators of our leading position in the industry",
+        experience: "20+ Years",
+        experienceLabel: "Industry Experience",
         products: "50+ Products",
-        customers: "500+ Customers",
+        productsLabel: "Product Diversity",
+        customers: "500+",
+        customersLabel: "Happy Customers",
+        countries: "30+ Countries",
+        countriesLabel: "Global Network",
+      },
+      trust: {
+        title: "Your Trusted Business Partner",
+        subtitle: "Our service approach focused on quality, reliability and customer satisfaction",
+        points: [
+          "Certified quality assurance",
+          "Competitive pricing",
+          "On-time delivery",
+          "24/7 customer support",
+        ],
       },
     },
   };
@@ -101,8 +137,8 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       name: locale === "tr" ? "Balık Unu" : "Fish Meal",
       description:
         locale === "tr"
-          ? "Premium kalite balık unu, %65+ protein"
-          : "Premium quality fish meal, 65%+ protein",
+          ? "Premium kalite balık unu, %65+ protein içeriği ile yüksek besin değeri"
+          : "Premium quality fish meal with high nutritional value, 65%+ protein content",
       isFeatured: true,
       slug: "balik-unu",
     },
@@ -111,8 +147,8 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       name: locale === "tr" ? "Tavuk Unu" : "Chicken Meal",
       description:
         locale === "tr"
-          ? "Yüksek protein içerikli tavuk unu"
-          : "High protein chicken meal",
+          ? "Yüksek protein içerikli tavuk unu, hayvan yemi üretimi için ideal"
+          : "High protein chicken meal, ideal for animal feed production",
       slug: "tavuk-unu",
     },
     {
@@ -120,8 +156,8 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       name: locale === "tr" ? "Soya Küspesi" : "Soybean Meal",
       description:
         locale === "tr"
-          ? "Bitkisel protein kaynağı"
-          : "Plant-based protein source",
+          ? "Bitkisel protein kaynağı, ekonomik ve besleyici"
+          : "Plant-based protein source, economical and nutritious",
       slug: "soya-kuspesi",
     },
     {
@@ -129,8 +165,8 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       name: locale === "tr" ? "Balık Yağı" : "Fish Oil",
       description:
         locale === "tr"
-          ? "Omega-3 açısından zengin balık yağı"
-          : "Omega-3 rich fish oil",
+          ? "Omega-3 açısından zengin balık yağı, premium kalite"
+          : "Omega-3 rich fish oil, premium quality",
       slug: "balik-yagi",
     },
   ];
@@ -162,80 +198,190 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <div className="min-h-screen">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-primary-blue via-primary-ocean to-primary-accent text-white py-20 md:py-32">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                {content.hero.title}
-              </h1>
-              <p className="text-xl md:text-2xl text-primary-light mb-8">
-                {content.hero.subtitle}
-              </p>
-              <p className="text-lg mb-10">{content.hero.description}</p>
+        {/* Hero Section - Modern & Professional */}
+        <section className="relative bg-gradient-to-br from-primary-blue via-primary-ocean to-primary-accent text-white overflow-hidden">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}></div>
+          </div>
 
-              <div className="grid md:grid-cols-3 gap-6 mb-10">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                  <Fish className="w-10 h-10 mx-auto mb-4" />
-                  <p className="font-semibold">{content.hero.features.protein}</p>
+          <div className="container mx-auto px-4 py-20 md:py-32 relative z-10">
+            <div className="max-w-5xl mx-auto text-center">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full mb-8 border border-white/30">
+                <Sparkles className="w-4 h-4" />
+                <span className="text-sm font-semibold">
+                  {locale === "tr" ? "Sektörün Lider Tedarikçisi" : "Industry Leading Supplier"}
+                </span>
+              </div>
+
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                <span className="block">{content.hero.title}</span>
+                <span className="block bg-gradient-to-r from-primary-light to-white bg-clip-text text-transparent">
+                  {content.hero.subtitle}
+                </span>
+              </h1>
+              
+              <p className="text-xl md:text-2xl text-primary-light mb-12 max-w-3xl mx-auto leading-relaxed">
+                {content.hero.description}
+              </p>
+
+              {/* Feature Pills */}
+              <div className="flex flex-wrap justify-center gap-4 mb-12">
+                <div className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all">
+                  <Fish className="w-5 h-5" />
+                  <span className="font-semibold">{content.hero.features.protein}</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                  <Award className="w-10 h-10 mx-auto mb-4" />
-                  <p className="font-semibold">{content.hero.features.certified}</p>
+                <div className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all">
+                  <Award className="w-5 h-5" />
+                  <span className="font-semibold">{content.hero.features.certified}</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-                  <Truck className="w-10 h-10 mx-auto mb-4" />
-                  <p className="font-semibold">{content.hero.features.delivery}</p>
+                <div className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all">
+                  <Truck className="w-5 h-5" />
+                  <span className="font-semibold">{content.hero.features.delivery}</span>
+                </div>
+                <div className="flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all">
+                  <Globe className="w-5 h-5" />
+                  <span className="font-semibold">{content.hero.features.global}</span>
                 </div>
               </div>
 
-              <Link href={`/${locale}/contact`}>
-                <Button variant="secondary" size="lg">
-                  {content.hero.cta}
-                </Button>
-              </Link>
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href={`/${locale}/contact`}>
+                  <Button variant="secondary" size="lg" className="text-lg px-8 py-6 shadow-2xl hover:shadow-3xl transition-all hover:scale-105">
+                    {content.hero.cta}
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
+                <Link href={`/${locale}/products`}>
+                  <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-2 border-white/30 bg-white/10 backdrop-blur-sm hover:bg-white/20">
+                    {content.hero.ctaSecondary}
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Wave Divider */}
+          <div className="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-20 md:h-32">
+              <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
+            </svg>
+          </div>
+        </section>
+
+        {/* Stats Section - Modern Cards */}
+        <section className="bg-white py-16 md:py-24 -mt-1">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-text-dark mb-4">
+                {content.stats.title}
+              </h2>
+              <p className="text-xl text-text-light max-w-2xl mx-auto">
+                {content.stats.subtitle}
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+              <div className="group text-center p-6 md:p-8 rounded-2xl bg-gradient-to-br from-primary-ocean/5 to-primary-blue/5 hover:shadow-xl transition-all duration-300 border border-primary-ocean/10 hover:border-primary-ocean/30">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-ocean/10 rounded-full mb-4 group-hover:scale-110 transition-transform">
+                  <TrendingUp className="w-8 h-8 text-primary-ocean" />
+                </div>
+                <div className="text-4xl md:text-5xl font-bold text-primary-ocean mb-2">
+                  {content.stats.experience}
+                </div>
+                <p className="text-sm md:text-base text-text-light font-medium">
+                  {content.stats.experienceLabel}
+                </p>
+              </div>
+
+              <div className="group text-center p-6 md:p-8 rounded-2xl bg-gradient-to-br from-primary-ocean/5 to-primary-blue/5 hover:shadow-xl transition-all duration-300 border border-primary-ocean/10 hover:border-primary-ocean/30">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-ocean/10 rounded-full mb-4 group-hover:scale-110 transition-transform">
+                  <Award className="w-8 h-8 text-primary-ocean" />
+                </div>
+                <div className="text-4xl md:text-5xl font-bold text-primary-ocean mb-2">
+                  {content.stats.products}
+                </div>
+                <p className="text-sm md:text-base text-text-light font-medium">
+                  {content.stats.productsLabel}
+                </p>
+              </div>
+
+              <div className="group text-center p-6 md:p-8 rounded-2xl bg-gradient-to-br from-primary-ocean/5 to-primary-blue/5 hover:shadow-xl transition-all duration-300 border border-primary-ocean/10 hover:border-primary-ocean/30">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-ocean/10 rounded-full mb-4 group-hover:scale-110 transition-transform">
+                  <Users className="w-8 h-8 text-primary-ocean" />
+                </div>
+                <div className="text-4xl md:text-5xl font-bold text-primary-ocean mb-2">
+                  {content.stats.customers}
+                </div>
+                <p className="text-sm md:text-base text-text-light font-medium">
+                  {content.stats.customersLabel}
+                </p>
+              </div>
+
+              <div className="group text-center p-6 md:p-8 rounded-2xl bg-gradient-to-br from-primary-ocean/5 to-primary-blue/5 hover:shadow-xl transition-all duration-300 border border-primary-ocean/10 hover:border-primary-ocean/30">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-ocean/10 rounded-full mb-4 group-hover:scale-110 transition-transform">
+                  <Globe className="w-8 h-8 text-primary-ocean" />
+                </div>
+                <div className="text-4xl md:text-5xl font-bold text-primary-ocean mb-2">
+                  {content.stats.countries}
+                </div>
+                <p className="text-sm md:text-base text-text-light font-medium">
+                  {content.stats.countriesLabel}
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Featured Product Spotlight */}
-        <section className="container mx-auto px-4 py-16 -mt-8">
+        <section className="container mx-auto px-4 py-16 md:py-24">
           <ProductSpotlight locale={locale} />
         </section>
 
-        {/* Stats Section */}
-        <section className="bg-slate-50 py-16">
+        {/* Trust Section */}
+        <section className="bg-gradient-to-br from-slate-50 to-white py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center text-text-dark mb-12">
-              {content.stats.title}
-            </h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="text-5xl font-bold text-primary-ocean mb-2">20+</div>
-                <p className="text-lg text-text-light">{content.stats.experience}</p>
-              </div>
-              <div className="text-center">
-                <div className="text-5xl font-bold text-primary-ocean mb-2">50+</div>
-                <p className="text-lg text-text-light">{content.stats.products}</p>
-              </div>
-              <div className="text-center">
-                <div className="text-5xl font-bold text-primary-ocean mb-2">500+</div>
-                <p className="text-lg text-text-light">{content.stats.customers}</p>
-              </div>
+            <div className="max-w-4xl mx-auto text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-text-dark mb-4">
+                {content.trust.title}
+              </h2>
+              <p className="text-xl text-text-light">
+                {content.trust.subtitle}
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+              {content.trust.points.map((point, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-4 p-6 bg-white rounded-xl shadow-md hover:shadow-xl transition-all border border-gray-100"
+                >
+                  <div className="flex-shrink-0 w-10 h-10 bg-primary-ocean/10 rounded-full flex items-center justify-center">
+                    <CheckCircle2 className="w-6 h-6 text-primary-ocean" />
+                  </div>
+                  <p className="text-text-dark font-medium text-left">{point}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* Products Section */}
-        <section className="container mx-auto px-4 py-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-text-dark mb-4">
+        <section className="container mx-auto px-4 py-16 md:py-24">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-text-dark mb-4">
               {content.products.title}
             </h2>
-            <p className="text-lg text-text-light">{content.products.subtitle}</p>
+            <p className="text-xl text-text-light max-w-2xl mx-auto">
+              {content.products.subtitle}
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-12">
             {featuredProducts.map((product) => (
               <ProductCard
                 key={product.id}
@@ -251,8 +397,9 @@ export default function HomePage({ params }: { params: { locale: string } }) {
 
           <div className="text-center">
             <Link href={`/${locale}/products`}>
-              <Button variant="outline" size="lg">
+              <Button variant="primary" size="lg" className="text-lg px-8 py-6">
                 {content.products.viewAll}
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
           </div>
@@ -261,24 +408,33 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         {/* Quality Certificates */}
         <QualityCertificates locale={locale} />
 
-        {/* CTA Section */}
-        <section className="bg-primary-ocean text-white py-16">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              {locale === "tr"
-                ? "Balık Unu Fiyat Teklifi Almak İster misiniz?"
-                : "Would you like to get a Fish Meal price quote?"}
-            </h2>
-            <p className="text-xl mb-8 text-primary-light">
-              {locale === "tr"
-                ? "Hemen iletişime geçin, size özel fiyat teklifi hazırlayalım."
-                : "Contact us now, let us prepare a custom price quote for you."}
-            </p>
-            <Link href={`/${locale}/contact`}>
-              <Button variant="secondary" size="lg">
-                {content.hero.cta}
-              </Button>
-            </Link>
+        {/* Final CTA Section */}
+        <section className="relative bg-gradient-to-br from-primary-blue via-primary-ocean to-primary-accent text-white py-20 md:py-28 overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}></div>
+          </div>
+          
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-4xl md:text-6xl font-bold mb-6">
+                {locale === "tr"
+                  ? "Balık Unu Fiyat Teklifi Almak İster misiniz?"
+                  : "Would you like to get a Fish Meal price quote?"}
+              </h2>
+              <p className="text-xl md:text-2xl text-primary-light mb-10">
+                {locale === "tr"
+                  ? "Hemen iletişime geçin, size özel fiyat teklifi hazırlayalım."
+                  : "Contact us now, let us prepare a custom price quote for you."}
+              </p>
+              <Link href={`/${locale}/contact`}>
+                <Button variant="secondary" size="lg" className="text-lg px-10 py-6 shadow-2xl hover:shadow-3xl transition-all hover:scale-105">
+                  {content.hero.cta}
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
       </div>
