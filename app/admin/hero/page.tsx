@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { Upload, Loader2, Image as ImageIcon, Slider } from "lucide-react";
+import { Upload, Loader2, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 
 export default function HeroManagementPage() {
