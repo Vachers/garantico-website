@@ -6,6 +6,10 @@ import { eq } from "drizzle-orm";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 
+// Disable caching for admin routes
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   const user = await getCurrentUser();
   if (!user) {

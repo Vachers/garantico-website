@@ -1,0 +1,425 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { Loader2, Save } from "lucide-react";
+
+interface ContentData {
+  backgroundColor: string;
+  tr: {
+    companyName: string;
+    mainTitle: string;
+    introText: string;
+    pureFish: {
+      title: string;
+      description: string;
+      contactButton: string;
+    };
+    benefits: {
+      aminoAcid: { title: string; description: string };
+      digestibility: { title: string; description: string };
+      metabolism: { title: string; description: string };
+    };
+    features: {
+      fcr: { title: string; description: string };
+      digestibility: { title: string; description: string };
+      quality: { title: string; description: string };
+      immune: { title: string; description: string };
+    };
+  };
+  en: {
+    companyName: string;
+    mainTitle: string;
+    introText: string;
+    pureFish: {
+      title: string;
+      description: string;
+      contactButton: string;
+    };
+    benefits: {
+      aminoAcid: { title: string; description: string };
+      digestibility: { title: string; description: string };
+      metabolism: { title: string; description: string };
+    };
+    features: {
+      fcr: { title: string; description: string };
+      digestibility: { title: string; description: string };
+      quality: { title: string; description: string };
+      immune: { title: string; description: string };
+    };
+  };
+}
+
+export default function HomepageContentPage() {
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [content, setContent] = useState<ContentData | null>(null);
+  const [activeTab, setActiveTab] = useState<"tr" | "en">("tr");
+
+  useEffect(() => {
+    fetchContent();
+  }, []);
+
+  const fetchContent = async () => {
+    try {
+      const response = await fetch("/api/admin/homepage-content");
+      const data = await response.json();
+      if (data.success) {
+        setContent(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching content:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!content) return;
+
+    setSaving(true);
+    try {
+      const response = await fetch("/api/admin/homepage-content", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: content }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        alert("İçerik başarıyla kaydedildi!");
+      } else {
+        alert("Hata: " + result.message);
+      }
+    } catch (error) {
+      alert("Bir hata oluştu");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const updateField = (path: string[], value: string) => {
+    if (!content) return;
+
+    const newContent = { ...content };
+    let current: any = newContent;
+
+    for (let i = 0; i < path.length - 1; i++) {
+      current = current[path[i]];
+    }
+
+    current[path[path.length - 1]] = value;
+    setContent(newContent);
+  };
+
+  if (loading) {
+    return <div className="text-center py-12">Yükleniyor...</div>;
+  }
+
+  if (!content) {
+    return <div className="text-center py-12">İçerik yüklenemedi</div>;
+  }
+
+  const currentLang = content[activeTab];
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-3xl font-bold text-text-dark">Ana Sayfa İçerik Yönetimi</h1>
+        <Button variant="primary" size="lg" onClick={handleSave} disabled={saving}>
+          {saving ? (
+            <>
+              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              Kaydediliyor...
+            </>
+          ) : (
+            <>
+              <Save className="w-5 h-5 mr-2" />
+              Kaydet
+            </>
+          )}
+        </Button>
+      </div>
+
+      {/* Background Color */}
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Arka Plan Rengi</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center gap-4">
+            <input
+              type="color"
+              value={content.backgroundColor}
+              onChange={(e) => setContent({ ...content, backgroundColor: e.target.value })}
+              className="w-20 h-10 rounded border border-gray-300 cursor-pointer"
+            />
+            <Input
+              value={content.backgroundColor}
+              onChange={(e) => setContent({ ...content, backgroundColor: e.target.value })}
+              placeholder="#e0f2fe"
+              className="max-w-xs"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Language Tabs */}
+      <div className="flex gap-2 mb-6">
+        <button
+          onClick={() => setActiveTab("tr")}
+          className={`px-4 py-2 rounded-lg font-medium ${
+            activeTab === "tr"
+              ? "bg-primary-ocean text-white"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
+        >
+          Türkçe
+        </button>
+        <button
+          onClick={() => setActiveTab("en")}
+          className={`px-4 py-2 rounded-lg font-medium ${
+            activeTab === "en"
+              ? "bg-primary-ocean text-white"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+          }`}
+        >
+          English
+        </button>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Left Column */}
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Üst Bölüm</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Şirket Adı</label>
+                <Input
+                  value={currentLang.companyName}
+                  onChange={(e) => updateField([activeTab, "companyName"], e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Ana Başlık</label>
+                <Input
+                  value={currentLang.mainTitle}
+                  onChange={(e) => updateField([activeTab, "mainTitle"], e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Giriş Metni</label>
+                <Textarea
+                  value={currentLang.introText}
+                  onChange={(e) => updateField([activeTab, "introText"], e.target.value)}
+                  rows={3}
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>%100 Saf Balık Bölümü</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Başlık</label>
+                <Input
+                  value={currentLang.pureFish.title}
+                  onChange={(e) => updateField([activeTab, "pureFish", "title"], e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Açıklama</label>
+                <Textarea
+                  value={currentLang.pureFish.description}
+                  onChange={(e) =>
+                    updateField([activeTab, "pureFish", "description"], e.target.value)
+                  }
+                  rows={4}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Buton Metni</label>
+                <Input
+                  value={currentLang.pureFish.contactButton}
+                  onChange={(e) =>
+                    updateField([activeTab, "pureFish", "contactButton"], e.target.value)
+                  }
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Faydalar</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Optimal Amino Asit Dengesi</label>
+                <Input
+                  value={currentLang.benefits.aminoAcid.title}
+                  onChange={(e) =>
+                    updateField([activeTab, "benefits", "aminoAcid", "title"], e.target.value)
+                  }
+                  className="mb-2"
+                />
+                <Textarea
+                  value={currentLang.benefits.aminoAcid.description}
+                  onChange={(e) =>
+                    updateField(
+                      [activeTab, "benefits", "aminoAcid", "description"],
+                      e.target.value
+                    )
+                  }
+                  rows={2}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Maksimum Sindirilebilirlik</label>
+                <Input
+                  value={currentLang.benefits.digestibility.title}
+                  onChange={(e) =>
+                    updateField(
+                      [activeTab, "benefits", "digestibility", "title"],
+                      e.target.value
+                    )
+                  }
+                  className="mb-2"
+                />
+                <Textarea
+                  value={currentLang.benefits.digestibility.description}
+                  onChange={(e) =>
+                    updateField(
+                      [activeTab, "benefits", "digestibility", "description"],
+                      e.target.value
+                    )
+                  }
+                  rows={2}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Metabolizma ve Enerji Verimliliği
+                </label>
+                <Input
+                  value={currentLang.benefits.metabolism.title}
+                  onChange={(e) =>
+                    updateField([activeTab, "benefits", "metabolism", "title"], e.target.value)
+                  }
+                  className="mb-2"
+                />
+                <Textarea
+                  value={currentLang.benefits.metabolism.description}
+                  onChange={(e) =>
+                    updateField(
+                      [activeTab, "benefits", "metabolism", "description"],
+                      e.target.value
+                    )
+                  }
+                  rows={2}
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Right Column - Features */}
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Özellik Kartları</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">FCR Performansı</label>
+                <Input
+                  value={currentLang.features.fcr.title}
+                  onChange={(e) =>
+                    updateField([activeTab, "features", "fcr", "title"], e.target.value)
+                  }
+                  className="mb-2"
+                />
+                <Textarea
+                  value={currentLang.features.fcr.description}
+                  onChange={(e) =>
+                    updateField([activeTab, "features", "fcr", "description"], e.target.value)
+                  }
+                  rows={3}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Sindirilebilirlik ve Performans
+                </label>
+                <Input
+                  value={currentLang.features.digestibility.title}
+                  onChange={(e) =>
+                    updateField(
+                      [activeTab, "features", "digestibility", "title"],
+                      e.target.value
+                    )
+                  }
+                  className="mb-2"
+                />
+                <Textarea
+                  value={currentLang.features.digestibility.description}
+                  onChange={(e) =>
+                    updateField(
+                      [activeTab, "features", "digestibility", "description"],
+                      e.target.value
+                    )
+                  }
+                  rows={3}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Kalite Kontrolü</label>
+                <Input
+                  value={currentLang.features.quality.title}
+                  onChange={(e) =>
+                    updateField([activeTab, "features", "quality", "title"], e.target.value)
+                  }
+                  className="mb-2"
+                />
+                <Textarea
+                  value={currentLang.features.quality.description}
+                  onChange={(e) =>
+                    updateField([activeTab, "features", "quality", "description"], e.target.value)
+                  }
+                  rows={3}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">İmmün Destek</label>
+                <Input
+                  value={currentLang.features.immune.title}
+                  onChange={(e) =>
+                    updateField([activeTab, "features", "immune", "title"], e.target.value)
+                  }
+                  className="mb-2"
+                />
+                <Textarea
+                  value={currentLang.features.immune.description}
+                  onChange={(e) =>
+                    updateField([activeTab, "features", "immune", "description"], e.target.value)
+                  }
+                  rows={3}
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
+

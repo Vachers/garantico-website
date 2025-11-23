@@ -12,6 +12,7 @@ import { eq } from "drizzle-orm";
 
 // Force dynamic rendering to avoid static generation issues
 export const dynamic = 'force-dynamic';
+export const revalidate = 0; // Disable caching completely
 
 export async function generateStaticParams() {
   return i18nConfig.locales.map((locale) => ({
@@ -63,7 +64,24 @@ export default async function HomePage({ params }: { params: { locale: string } 
     ? parseInt(overlayOpacitySetting[0].value)
     : 40;
 
-  const t = {
+  // Fetch homepage content section from database
+  const contentSectionSettings = await db
+    .select()
+    .from(siteSettings)
+    .where(eq(siteSettings.key, "homepage_content_section"))
+    .limit(1);
+
+  let contentSectionData = null;
+  if (contentSectionSettings[0]?.value) {
+    try {
+      contentSectionData = JSON.parse(contentSectionSettings[0].value);
+    } catch (e) {
+      console.error("Error parsing content section data:", e);
+    }
+  }
+
+  // Default content (fallback)
+  const defaultContent = {
     tr: {
       companyName: "GarantiCo Yem & Hammadde Sanayi",
       mainTitle: "Balık Unu ve Yem Hammaddeleri",
@@ -239,8 +257,8 @@ export default async function HomePage({ params }: { params: { locale: string } 
           </div>
         </section>
 
-        {/* Main Content Section - Light Blue Background */}
-        <section className="bg-[#e0f2fe] py-16 md:py-24">
+        {/* Main Content Section - Background color from admin */}
+        <section className="py-16 md:py-24" style={{ backgroundColor: sectionBgColor }}>
           <div className="container mx-auto px-4">
             {/* Company Name and Title */}
             <div className="mb-8">
