@@ -13,7 +13,8 @@
     "db:studio": "drizzle-kit studio",
     "vercel:env": "node scripts/vercel-env.js",
     "admin:create": "node scripts/create-admin-user.js",
-    "db:seed-menu": "node scripts/seed-menu-items.js"
+    "db:seed-menu": "node scripts/seed-menu-items.js",
+    "db:seed-hero": "node scripts/seed-hero-settings.js"
   },
   "dependencies": {
     "react": "^18.3.1",
