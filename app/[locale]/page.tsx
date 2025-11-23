@@ -2,7 +2,7 @@ import { ProductSpotlight } from "@/components/ProductSpotlight";
 import { QualityCertificates } from "@/components/QualityCertificates";
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/Button";
-import { Fish, Award, TrendingUp, CheckCircle2 } from "lucide-react";
+import { Fish, Award, TrendingUp, CheckCircle2, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { i18nConfig } from "@/lib/i18n/config";
@@ -65,18 +65,34 @@ export default async function HomePage({ params }: { params: { locale: string } 
     : 40;
 
   // Fetch homepage content section from database
-  const contentSectionSettings = await db
-    .select()
-    .from(siteSettings)
-    .where(eq(siteSettings.key, "homepage_content_section"))
-    .limit(1);
+  const [contentSectionSettings, biologicalsSectionSettings] = await Promise.all([
+    db
+      .select()
+      .from(siteSettings)
+      .where(eq(siteSettings.key, "homepage_content_section"))
+      .limit(1),
+    db
+      .select()
+      .from(siteSettings)
+      .where(eq(siteSettings.key, "homepage_biologicals_section"))
+      .limit(1),
+  ]);
 
-  let contentSectionData = null;
+  let contentSectionData: any = null;
   if (contentSectionSettings[0]?.value) {
     try {
       contentSectionData = JSON.parse(contentSectionSettings[0].value);
     } catch (e) {
       console.error("Error parsing content section data:", e);
+    }
+  }
+
+  let biologicalsSectionData: any = null;
+  if (biologicalsSectionSettings[0]?.value) {
+    try {
+      biologicalsSectionData = JSON.parse(biologicalsSectionSettings[0].value);
+    } catch (e) {
+      console.error("Error parsing biologicals section data:", e);
     }
   }
 
@@ -376,6 +392,60 @@ export default async function HomePage({ params }: { params: { locale: string } 
             </div>
           </div>
         </section>
+
+        {/* Biologicals Section - Split Layout */}
+        {biologicalsSectionData?.enabled !== false && (
+          <section className="bg-white py-16 md:py-24">
+            <div className="grid md:grid-cols-2 min-h-[500px]">
+              {/* Left Panel - Text Content */}
+              <div 
+                className="p-12 md:p-16 flex flex-col justify-center"
+                style={{ backgroundColor: biologicalsSectionData?.leftBgColor || "#0c4a6e" }}
+              >
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                  {biologicalsSectionData?.[locale]?.title || (locale === "tr" ? "Balık Unu" : "Fish Meal")}
+                </h2>
+                <p className="text-xl md:text-2xl font-bold mb-6" style={{ color: biologicalsSectionData?.accentColor || "#f97316" }}>
+                  {biologicalsSectionData?.[locale]?.subtitle || (locale === "tr" ? "Kaliteli Yem Hammaddeleri" : "Quality Feed Materials")}
+                </p>
+                <p className="text-lg text-white/90 mb-8 leading-relaxed">
+                  {biologicalsSectionData?.[locale]?.description || (locale === "tr" 
+                    ? "Yüksek protein içeriği ve doğru aminoasit profili ile balık yemi üretiminde en uygun ürünleri keşfedin. Rejeneratif tarım, hayvan sağlığı ve neden önemli olduklarını öğrenin."
+                    : "Discover the most suitable products for fish feed production with high protein content and correct amino acid profile. Learn about regenerative agriculture, animal health and why they are important.")}
+                </p>
+                <Link href={`/${locale}/products`}>
+                  <Button 
+                    variant="secondary" 
+                    size="lg" 
+                    className="w-fit"
+                    style={{ 
+                      backgroundColor: biologicalsSectionData?.buttonColor || "#f97316",
+                      color: "white"
+                    }}
+                  >
+                    {biologicalsSectionData?.[locale]?.buttonText || (locale === "tr" ? "BALIK UNU NEDİR?" : "WHAT IS FISH MEAL?")}
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
+              </div>
+              {/* Right Panel - Image */}
+              <div 
+                className="bg-cover bg-center bg-no-repeat"
+                style={{
+                  backgroundImage: biologicalsSectionData?.imageUrl 
+                    ? `url('${biologicalsSectionData.imageUrl}')` 
+                    : "url('/placeholder-biologicals.jpg')"
+                }}
+              >
+                {!biologicalsSectionData?.imageUrl && (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-400">Resim yüklenecek</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Products Section */}
         <section className="bg-white py-16 md:py-24">
