@@ -107,9 +107,9 @@ export default async function LocaleLayout({
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-6">
-                {displayTopMenu.map((item) => (
+                {displayTopMenu.map((item, index) => (
                   <Link
-                    key={item.id || item.href}
+                    key={`top-${item.href}-${index}`}
                     href={item.href}
                     className="hover:text-primary-light transition-colors"
                   >
@@ -141,9 +141,9 @@ export default async function LocaleLayout({
                 GarantiCo
               </Link>
               <div className="hidden lg:flex items-center gap-8">
-                {displayMainMenu.map((item) => (
+                {displayMainMenu.map((item, index) => (
                   <Link
-                    key={item.id || item.href}
+                    key={`main-${item.href}-${index}`}
                     href={item.href}
                     className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
                   >

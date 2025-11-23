@@ -45,7 +45,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ locale, menuItems: propM
             <div className="flex flex-col p-4 space-y-4">
               {menuItems.map((item, index) => (
                 <Link
-                  key={item.id || item.href || index}
+                  key={`mobile-${item.href}-${index}`}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
                   className="text-text-dark hover:text-primary-ocean transition-colors py-2 border-b border-gray-200"
