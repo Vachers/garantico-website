@@ -1,0 +1,36 @@
+{
+  "common": {
+    "home": "Ana Səhifə",
+    "about": "Haqqımızda",
+    "products": "Məhsullarımız",
+    "contact": "Əlaqə",
+    "getQuote": "Təklif Al",
+    "learnMore": "Daha Çox Öyrən",
+    "readMore": "Davamını Oxu",
+    "close": "Bağla",
+    "submit": "Göndər",
+    "loading": "Yüklənir...",
+    "error": "Xəta",
+    "success": "Uğurlu"
+  },
+  "home": {
+    "hero": {
+      "title": "Keyfiyyətli Balıq Unu və Yem Xammalları Təchizatçısı",
+      "subtitle": "Avropa Keyfiyyətində Balıq Unu və Yem Xammalları",
+      "description": "20+ İllik Təcrübə ilə Etibarlı Təchizat"
+    }
+  },
+  "products": {
+    "title": "Məhsullarımız",
+    "description": "Keyfiyyətli yem materiallarının geniş çeşidi"
+  },
+  "about": {
+    "title": "Haqqımızda",
+    "description": "Şirkətimiz haqqında daha çox öyrənin"
+  },
+  "contact": {
+    "title": "Bizimlə Əlaqə",
+    "description": "Əlavə məlumat üçün bizimlə əlaqə saxlayın"
+  }
+}
+
