@@ -29,12 +29,16 @@ export const LanguageSwitcher: React.FC = () => {
       newPath = `/${pathSegments.join("/")}`;
     } else {
       // Add locale to the beginning
-      newPath = `/${locale}${pathname === "/" ? "" : pathname}`;
+      const restOfPath = pathname === "/" ? "" : pathname;
+      newPath = `/${locale}${restOfPath}`;
     }
     
-    // Use router.push with explicit locale
-    router.push(newPath);
-    router.refresh(); // Force refresh to ensure locale change is applied
+    // Use window.location for more reliable navigation
+    if (typeof window !== "undefined") {
+      window.location.href = newPath;
+    } else {
+      router.push(newPath);
+    }
   };
 
   const currentLocale = (() => {
