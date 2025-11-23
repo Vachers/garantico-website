@@ -186,20 +186,28 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <div className="min-h-screen">
-        {/* Hero Section - Full width with background image placeholder */}
-        <section className="relative w-full h-[85vh] md:h-[90vh] flex items-center justify-start bg-gradient-to-b from-primary-blue via-primary-ocean to-primary-blue overflow-hidden">
-          {/* Background image will be added here later */}
-          <div className="absolute inset-0 bg-gradient-to-b from-primary-blue/90 via-primary-ocean/80 to-primary-blue/90"></div>
+        {/* Hero Section - Full width with background image */}
+        <section className="relative w-full h-[85vh] md:h-[90vh] flex items-center justify-start overflow-hidden">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: "url('/hero-image.jpg')",
+            }}
+          >
+            {/* Dark overlay for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-blue/85 via-primary-blue/70 to-primary-blue/50"></div>
+          </div>
           
           {/* Content */}
           <div className="container mx-auto px-4 md:px-8 relative z-10">
             <div className="max-w-2xl">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight drop-shadow-2xl">
                 {content.hero.title}
               </h1>
               <div className="flex items-center gap-3">
-                <Play className="w-8 h-8 md:w-10 md:h-10 text-white" />
-                <span className="text-xl md:text-2xl text-white font-medium">
+                <Play className="w-8 h-8 md:w-10 md:h-10 text-white drop-shadow-lg" />
+                <span className="text-xl md:text-2xl text-white font-medium drop-shadow-lg">
                   {content.hero.subtitle}
                 </span>
               </div>
