@@ -84,16 +84,77 @@ export default async function LocaleLayout({
   const topMenuItems = menuItems.filter((item) => item.menuType === "top");
   const mainMenuItems = menuItems.filter((item) => item.menuType === "main");
 
+  // Helper function to fix href with current locale
+  const fixHref = (href: string) => {
+    // If href already has a locale, replace it with current locale
+    const segments = href.split("/").filter(Boolean);
+    if (segments.length > 0 && i18nConfig.locales.includes(segments[0] as any)) {
+      segments[0] = locale;
+      return `/${segments.join("/")}`;
+    }
+    // If href starts with /, add locale
+    if (href.startsWith("/")) {
+      return `/${locale}${href}`;
+    }
+    // If href is relative, add locale
+    return `/${locale}/${href}`;
+  };
+
   // Default menu items if database is empty
   const defaultTopMenu = [
-    { labelTr: "Dünya İçin, Yaşam İçin", labelEn: "For Earth, For Life", href: "#", menuType: "top" as const },
+    { 
+      labelTr: "Dünya İçin, Yaşam İçin", 
+      labelEn: "For Earth, For Life",
+      labelRu: "Для Земли, Для Жизни",
+      labelFa: "برای زمین، برای زندگی",
+      labelAz: "Yer üçün, Həyat üçün",
+      labelAr: "من أجل الأرض، من أجل الحياة",
+      href: "#", 
+      menuType: "top" as const 
+    },
   ];
 
   const defaultMainMenu = [
-    { labelTr: "Ana Sayfa", labelEn: "Home", href: `/${locale}`, menuType: "main" as const },
-    { labelTr: "Hakkımızda", labelEn: "About", href: `/${locale}/about`, menuType: "main" as const },
-    { labelTr: "Ürünlerimiz", labelEn: "Products", href: `/${locale}/products`, menuType: "main" as const },
-    { labelTr: "İletişim", labelEn: "Contact", href: `/${locale}/contact`, menuType: "main" as const },
+    { 
+      labelTr: "Ana Sayfa", 
+      labelEn: "Home",
+      labelRu: "Главная",
+      labelFa: "خانه",
+      labelAz: "Ana Səhifə",
+      labelAr: "الرئيسية",
+      href: `/${locale}`, 
+      menuType: "main" as const 
+    },
+    { 
+      labelTr: "Hakkımızda", 
+      labelEn: "About",
+      labelRu: "О нас",
+      labelFa: "درباره ما",
+      labelAz: "Haqqımızda",
+      labelAr: "من نحن",
+      href: `/${locale}/about`, 
+      menuType: "main" as const 
+    },
+    { 
+      labelTr: "Ürünlerimiz", 
+      labelEn: "Products",
+      labelRu: "Продукция",
+      labelFa: "محصولات",
+      labelAz: "Məhsullarımız",
+      labelAr: "المنتجات",
+      href: `/${locale}/products`, 
+      menuType: "main" as const 
+    },
+    { 
+      labelTr: "İletişim", 
+      labelEn: "Contact",
+      labelRu: "Контакты",
+      labelFa: "تماس",
+      labelAz: "Əlaqə",
+      labelAr: "اتصل بنا",
+      href: `/${locale}/contact`, 
+      menuType: "main" as const 
+    },
   ];
 
   const displayTopMenu = topMenuItems.length > 0 ? topMenuItems : defaultTopMenu;
@@ -121,7 +182,7 @@ export default async function LocaleLayout({
                 {displayTopMenu.map((item, index) => (
                   <Link
                     key={`top-${item.href}-${index}`}
-                    href={item.href}
+                    href={fixHref(item.href)}
                     className="hover:text-primary-light transition-colors"
                   >
                     {getMenuLabel(item)}
@@ -155,7 +216,7 @@ export default async function LocaleLayout({
                 {displayMainMenu.map((item, index) => (
                   <Link
                     key={`main-${item.href}-${index}`}
-                    href={item.href}
+                    href={fixHref(item.href)}
                     className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
                   >
                     {getMenuLabel(item)}
