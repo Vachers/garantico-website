@@ -2,7 +2,7 @@ import { ProductSpotlight } from "@/components/ProductSpotlight";
 import { QualityCertificates } from "@/components/QualityCertificates";
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/Button";
-import { Fish, Award, Truck, TrendingUp, Users, Globe, CheckCircle2, ArrowRight, Play } from "lucide-react";
+import { Fish, Award, TrendingUp, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { i18nConfig } from "@/lib/i18n/config";
