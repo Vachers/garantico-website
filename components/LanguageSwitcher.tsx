@@ -12,17 +12,39 @@ export const LanguageSwitcher: React.FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const switchLanguage = (locale: string) => {
-    const segments = pathname.split("/").filter(Boolean);
-    if (segments.length > 0 && i18nConfig.locales.includes(segments[0] as any)) {
-      segments[0] = locale;
-    } else {
-      segments.unshift(locale);
-    }
     setIsOpen(false);
-    router.push(`/${segments.join("/")}`);
+    
+    // Get current pathname segments
+    const pathSegments = pathname.split("/").filter(Boolean);
+    
+    // Check if first segment is a locale
+    const firstSegment = pathSegments[0];
+    const isLocaleInPath = firstSegment && i18nConfig.locales.includes(firstSegment as any);
+    
+    let newPath: string;
+    
+    if (isLocaleInPath) {
+      // Replace the locale in the path
+      pathSegments[0] = locale;
+      newPath = `/${pathSegments.join("/")}`;
+    } else {
+      // Add locale to the beginning
+      newPath = `/${locale}${pathname === "/" ? "" : pathname}`;
+    }
+    
+    // Use router.push with explicit locale
+    router.push(newPath);
+    router.refresh(); // Force refresh to ensure locale change is applied
   };
 
-  const currentLocale = pathname.split("/")[1] || i18nConfig.defaultLocale;
+  const currentLocale = (() => {
+    const segments = pathname.split("/").filter(Boolean);
+    const firstSegment = segments[0];
+    if (firstSegment && i18nConfig.locales.includes(firstSegment as any)) {
+      return firstSegment;
+    }
+    return i18nConfig.defaultLocale;
+  })();
 
   // Close dropdown when clicking outside
   useEffect(() => {
