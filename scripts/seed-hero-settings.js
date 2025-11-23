@@ -23,7 +23,7 @@ async function seedHeroSettings() {
 
     // Check if hero settings already exist
     const existing = await sql`
-      SELECT COUNT(*) as count FROM site_settings WHERE key = 'hero_image' OR key = 'hero_overlay_opacity'
+      SELECT COUNT(*) as count FROM site_settings WHERE key = 'hero_image_url' OR key = 'hero_overlay_opacity'
     `;
 
     if (existing[0].count > 0) {
@@ -35,7 +35,7 @@ async function seedHeroSettings() {
     await sql`
       INSERT INTO site_settings (key, value, type)
       VALUES 
-        ('hero_image', '/hero-image.png', 'text'),
+        ('hero_image_url', '/hero-image.png', 'text'),
         ('hero_overlay_opacity', '30', 'text')
       ON CONFLICT (key) DO NOTHING
     `;

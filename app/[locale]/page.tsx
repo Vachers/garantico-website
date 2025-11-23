@@ -65,67 +65,87 @@ export default async function HomePage({ params }: { params: { locale: string } 
 
   const t = {
     tr: {
-      highlightTopics: {
-        title: "Öne Çıkan Konular",
+      companyName: "GarantiCo Yem & Hammadde Sanayi",
+      mainTitle: "Balık Unu ve Yem Hammaddeleri",
+      introText: "Yüksek protein içeriği ve doğru aminoasit profili ile balık yemi üretiminde en uygun ürünleri size sunuyoruz.",
+      pureFish: {
+        title: "%100 Saf Balık",
+        description: "Ürünlerimiz, sadece taze ve soğutulmuş yabani yakalanmış balıklardan üretilmektedir. Yüksek kaliteli protein içeriği ve dengeli amino asit profili ile balık yemi ve diğer yem gruplarında üstün performans sunar.",
+        contactButton: "İletişim",
       },
-      whoWeAre: {
-        title: "Biz Kimiz",
-        description: "Ürünlerimiz ve teknolojilerimiz, gıda, su ve çevre alanlarında çözümler sunmaktadır.",
-        agriculture: {
-          title: "Tarım",
-          description: "Kapsamlı tarım çözümleri sağlayıcısı olarak, küresel tarımı destekliyoruz.",
+      benefits: {
+        aminoAcid: {
+          title: "Optimal Amino Asit Dengesi",
+          description: "Balık unlarımız, sağlıklı büyüme için gerekli tüm temel amino asitleri içerir.",
         },
-        water: {
-          title: "Su",
-          description: "Su çevre çözümlerimiz, su altyapısını desteklemektedir.",
+        digestibility: {
+          title: "Maksimum Sindirilebilirlik",
+          description: "Düşük sıcaklık işleme teknolojimiz, optimal besin emilimi için yüksek sindirilebilirlik sağlar.",
         },
-        environment: {
-          title: "Çevre",
-          description: "Üretim için sosyal altyapı ve refah dolu yaşamlara katkı sağlıyoruz.",
+        metabolism: {
+          title: "Metabolizma ve Enerji Verimliliği",
+          description: "Seçilmiş içeriklerimiz, aktif yaşam ve gelişmiş genel sağlık için enerji transferini optimize eder.",
         },
-        button: "Yarın İçin Temel",
       },
-      innovation: {
-        title: "İnovasyon",
-        description: "Sosyal sorunları ele almak ve yeni hizmetler ve ürünler geliştirmek için vizyonumuz.",
-        button: "Daha Fazla Bilgi",
-      },
-      sustainability: {
-        title: "Sürdürülebilirlik",
-        description: "Gıda, su ve çevreyi sürdürülebilir bir toplum için tek bir tema olarak ele alıyoruz.",
-        button: "Daha Fazla Bilgi",
+      features: {
+        fcr: {
+          title: "Optimize Edilmiş FCR Performansı",
+          description: "Yem tüketimini minimize eder, verimi maksimize eder, düşük FCR oranları sağlar, hayvan sağlığını destekler, üretim maliyetlerini azaltır ve sürdürülebilir büyümeye katkı sağlar.",
+        },
+        digestibility: {
+          title: "Yüksek Sindirilebilirlik ve Performans Artışı",
+          description: "Maksimum besin değeri için üstün sindirilebilirlik, verimli hayvan beslenmesi, gelişmiş büyüme performansı ve azaltılmış üretim maliyetleri.",
+        },
+        quality: {
+          title: "Modern Üretim Süreçleri ve Kalite Kontrolü",
+          description: "Besin değerini korumak ve uluslararası standartlara uygunluğu sağlamak için en son düşük sıcaklık işleme teknolojileri ve titiz kalite kontrol prosedürleri kullanılmaktadır.",
+        },
+        immune: {
+          title: "Gelişmiş İmmün Destek ve Antioksidan Koruma",
+          description: "Doğal antioksidanlarla zenginleştirilmiş formül, bağışıklık sistemlerini güçlendirir, serbest radikal etkilerini azaltır, oksidatif strese karşı direnci artırır ve hastalıklara karşı proaktif koruma sağlar.",
+        },
       },
     },
     en: {
-      highlightTopics: {
-        title: "Highlight Topics",
+      companyName: "GarantiCo Feed & Raw Material Industry",
+      mainTitle: "Fish Meal and Feed Raw Materials",
+      introText: "We offer you the most suitable products for fish feed production with high protein content and the correct amino acid profile.",
+      pureFish: {
+        title: "100% Pure Fish",
+        description: "Our products are produced only from fresh and chilled wild-caught fish. With high-quality protein content and a balanced amino acid profile, they offer superior performance in fish feed and other feed groups.",
+        contactButton: "Contact",
       },
-      whoWeAre: {
-        title: "Who We Are",
-        description: "Our products and technologies provide solutions in food, water, and the environment.",
-        agriculture: {
-          title: "Agriculture",
-          description: "As a comprehensive solutions provider for agriculture, we support farming globally.",
+      benefits: {
+        aminoAcid: {
+          title: "Optimal Amino Acid Balance",
+          description: "Our fish meals contain all essential amino acids necessary for healthy growth.",
         },
-        water: {
-          title: "Water",
-          description: "Our water environment solutions support water infrastructure.",
+        digestibility: {
+          title: "Maximum Digestibility",
+          description: "Our low-temperature processing technology provides high digestibility for optimal nutrient absorption.",
         },
-        environment: {
-          title: "Environment",
-          description: "We contribute to social infrastructure for manufacturing and affluent lives.",
+        metabolism: {
+          title: "Metabolism and Energy Efficiency",
+          description: "Our selected ingredients optimize energy transfer for active life and improved general health.",
         },
-        button: "Groundwork for Tomorrow",
       },
-      innovation: {
-        title: "Innovation",
-        description: "Our vision for addressing social issues and developing new services and products.",
-        button: "Learn More",
-      },
-      sustainability: {
-        title: "Sustainability",
-        description: "We approach food, water, and the environment as a singular theme for a sustainable society.",
-        button: "Learn More",
+      features: {
+        fcr: {
+          title: "Optimized FCR Performance",
+          description: "Minimizes feed consumption, maximizes yield, achieves low FCR rates, supports animal health, reduces production costs, and contributes to sustainable growth.",
+        },
+        digestibility: {
+          title: "High Digestibility and Performance Increase",
+          description: "Superior digestibility for maximum nutritional value, efficient animal nutrition, improved growth performance, and reduced production costs.",
+        },
+        quality: {
+          title: "Modern Production Processes and Quality Control",
+          description: "Uses the latest low-temperature processing technologies and meticulous quality control procedures to preserve nutritional value and ensure compliance with international standards.",
+        },
+        immune: {
+          title: "Advanced Immune Support and Antioxidant Protection",
+          description: "Formula enriched with natural antioxidants to strengthen immune systems, reduce free radical effects, increase resistance to oxidative stress, and provide proactive protection against diseases.",
+        },
       },
     },
   };
@@ -219,117 +239,120 @@ export default async function HomePage({ params }: { params: { locale: string } 
           </div>
         </section>
 
-        {/* Highlight Topics Section */}
-        <section className="bg-white py-16 md:py-24">
+        {/* Main Content Section - Light Blue Background */}
+        <section className="bg-[#e0f2fe] py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-text-dark mb-12 text-center">
-              {content.highlightTopics.title}
-            </h2>
+            {/* Company Name and Title */}
+            <div className="mb-8">
+              <p className="text-sm md:text-base text-text-dark mb-2">{content.companyName}</p>
+              <div className="w-16 h-0.5 bg-primary-ocean mb-4"></div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-text-dark mb-6">
+                {content.mainTitle}
+              </h2>
+              <p className="text-base md:text-lg text-text-light max-w-3xl">
+                {content.introText}
+              </p>
+            </div>
+
+            {/* Two Column Layout */}
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-16">
+              {/* Left Column - Pure Fish */}
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold text-text-dark mb-4">
+                  {content.pureFish.title}
+                </h3>
+                <p className="text-base md:text-lg text-text-light mb-6 leading-relaxed">
+                  {content.pureFish.description}
+                </p>
+                <Link href={`/${locale}/contact`}>
+                  <Button variant="primary" size="lg">
+                    {content.pureFish.contactButton}
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Right Column - Benefits */}
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-xl md:text-2xl font-bold text-text-dark mb-2">
+                    {content.benefits.aminoAcid.title}
+                  </h4>
+                  <p className="text-base text-text-light leading-relaxed">
+                    {content.benefits.aminoAcid.description}
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-xl md:text-2xl font-bold text-text-dark mb-2">
+                    {content.benefits.digestibility.title}
+                  </h4>
+                  <p className="text-base text-text-light leading-relaxed">
+                    {content.benefits.digestibility.description}
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-xl md:text-2xl font-bold text-text-dark mb-2">
+                    {content.benefits.metabolism.title}
+                  </h4>
+                  <p className="text-base text-text-light leading-relaxed">
+                    {content.benefits.metabolism.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Four Feature Cards */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[1, 2, 3, 4].map((item) => (
-                <div key={item} className="bg-gray-100 rounded-lg aspect-[4/3] flex items-center justify-center">
-                  <span className="text-text-light">Topic {item}</span>
+              {/* FCR Performance */}
+              <div className="bg-white rounded-lg p-6 shadow-sm">
+                <div className="w-16 h-16 bg-primary-ocean/10 rounded-lg flex items-center justify-center mb-4">
+                  <TrendingUp className="w-8 h-8 text-primary-ocean" />
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Who We Are Section */}
-        <section className="bg-primary-light/10 py-16 md:py-24">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-text-dark mb-6">
-                {content.whoWeAre.title}
-              </h2>
-              <p className="text-lg text-text-light">
-                {content.whoWeAre.description}
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              {/* Agriculture */}
-              <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                <div className="h-48 bg-gradient-to-br from-green-400 to-green-600"></div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-text-dark mb-3">
-                    {content.whoWeAre.agriculture.title}
-                  </h3>
-                  <p className="text-text-light">
-                    {content.whoWeAre.agriculture.description}
-                  </p>
-                </div>
+                <h4 className="text-lg font-bold text-text-dark mb-3">
+                  {content.features.fcr.title}
+                </h4>
+                <p className="text-sm text-text-light leading-relaxed">
+                  {content.features.fcr.description}
+                </p>
               </div>
 
-              {/* Water */}
-              <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                <div className="h-48 bg-gradient-to-br from-primary-ocean to-primary-blue"></div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-text-dark mb-3">
-                    {content.whoWeAre.water.title}
-                  </h3>
-                  <p className="text-text-light">
-                    {content.whoWeAre.water.description}
-                  </p>
+              {/* Digestibility */}
+              <div className="bg-white rounded-lg p-6 shadow-sm">
+                <div className="w-16 h-16 bg-primary-ocean/10 rounded-lg flex items-center justify-center mb-4">
+                  <Fish className="w-8 h-8 text-primary-ocean" />
                 </div>
+                <h4 className="text-lg font-bold text-text-dark mb-3">
+                  {content.features.digestibility.title}
+                </h4>
+                <p className="text-sm text-text-light leading-relaxed">
+                  {content.features.digestibility.description}
+                </p>
               </div>
 
-              {/* Environment */}
-              <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                <div className="h-48 bg-gradient-to-br from-primary-blue to-primary-ocean"></div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-text-dark mb-3">
-                    {content.whoWeAre.environment.title}
-                  </h3>
-                  <p className="text-text-light">
-                    {content.whoWeAre.environment.description}
-                  </p>
+              {/* Quality Control */}
+              <div className="bg-white rounded-lg p-6 shadow-sm">
+                <div className="w-16 h-16 bg-primary-ocean/10 rounded-lg flex items-center justify-center mb-4">
+                  <Award className="w-8 h-8 text-primary-ocean" />
                 </div>
+                <h4 className="text-lg font-bold text-text-dark mb-3">
+                  {content.features.quality.title}
+                </h4>
+                <p className="text-sm text-text-light leading-relaxed">
+                  {content.features.quality.description}
+                </p>
               </div>
-            </div>
 
-            <div className="text-center">
-              <Button variant="primary" size="lg">
-                {content.whoWeAre.button}
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Innovation Section - Split Layout */}
-        <section className="bg-white py-16 md:py-24">
-          <div className="grid md:grid-cols-2">
-            <div className="bg-primary-blue text-white p-12 md:p-16 flex flex-col justify-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                {content.innovation.title}
-              </h2>
-              <p className="text-lg text-primary-light mb-8">
-                {content.innovation.description}
-              </p>
-              <Button variant="secondary" size="lg" className="w-fit">
-                {content.innovation.button}
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </div>
-            <div className="bg-gradient-to-br from-primary-ocean to-primary-blue h-96 md:h-auto"></div>
-          </div>
-        </section>
-
-        {/* Sustainability Section - Split Layout (reversed) */}
-        <section className="bg-white py-16 md:py-24">
-          <div className="grid md:grid-cols-2">
-            <div className="bg-gradient-to-br from-green-400 to-green-600 h-96 md:h-auto"></div>
-            <div className="bg-primary-blue text-white p-12 md:p-16 flex flex-col justify-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                {content.sustainability.title}
-              </h2>
-              <p className="text-lg text-primary-light mb-8">
-                {content.sustainability.description}
-              </p>
-              <Button variant="secondary" size="lg" className="w-fit">
-                {content.sustainability.button}
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
+              {/* Immune Support */}
+              <div className="bg-white rounded-lg p-6 shadow-sm">
+                <div className="w-16 h-16 bg-primary-ocean/10 rounded-lg flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-8 h-8 text-primary-ocean" />
+                </div>
+                <h4 className="text-lg font-bold text-text-dark mb-3">
+                  {content.features.immune.title}
+                </h4>
+                <p className="text-sm text-text-light leading-relaxed">
+                  {content.features.immune.description}
+                </p>
+              </div>
             </div>
           </div>
         </section>
