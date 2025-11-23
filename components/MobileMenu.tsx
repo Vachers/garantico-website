@@ -9,8 +9,12 @@ interface MobileMenuProps {
   locale: string;
   menuItems?: Array<{
     id?: number;
-    labelTr: string;
-    labelEn: string;
+    labelTr?: string;
+    labelEn?: string;
+    labelRu?: string;
+    labelFa?: string;
+    labelAz?: string;
+    labelAr?: string;
     href: string;
   }>;
 }
@@ -18,12 +22,46 @@ interface MobileMenuProps {
 export const MobileMenu: React.FC<MobileMenuProps> = ({ locale, menuItems: propMenuItems }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const menuItems = propMenuItems || [
-    { href: `/${locale}`, labelTr: "Ana Sayfa", labelEn: "Home" },
-    { href: `/${locale}/about`, labelTr: "Hakkımızda", labelEn: "About" },
-    { href: `/${locale}/products`, labelTr: "Ürünlerimiz", labelEn: "Products" },
-    { href: `/${locale}/contact`, labelTr: "İletişim", labelEn: "Contact" },
+  const defaultMenuItems = [
+    { 
+      href: `/${locale}`, 
+      labelTr: "Ana Sayfa", 
+      labelEn: "Home",
+      labelRu: "Главная",
+      labelFa: "خانه",
+      labelAz: "Ana Səhifə",
+      labelAr: "الرئيسية",
+    },
+    { 
+      href: `/${locale}/about`, 
+      labelTr: "Hakkımızda", 
+      labelEn: "About",
+      labelRu: "О нас",
+      labelFa: "درباره ما",
+      labelAz: "Haqqımızda",
+      labelAr: "من نحن",
+    },
+    { 
+      href: `/${locale}/products`, 
+      labelTr: "Ürünlerimiz", 
+      labelEn: "Products",
+      labelRu: "Продукция",
+      labelFa: "محصولات",
+      labelAz: "Məhsullarımız",
+      labelAr: "المنتجات",
+    },
+    { 
+      href: `/${locale}/contact`, 
+      labelTr: "İletişim", 
+      labelEn: "Contact",
+      labelRu: "Контакты",
+      labelFa: "تماس",
+      labelAz: "Əlaqə",
+      labelAr: "اتصل بنا",
+    },
   ];
+
+  const menuItems = propMenuItems || defaultMenuItems;
 
   return (
     <div className="md:hidden">
