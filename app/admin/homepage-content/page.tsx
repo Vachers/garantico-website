@@ -57,7 +57,6 @@ export default function HomepageContentPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [content, setContent] = useState<ContentData | null>(null);
-  const [activeTab, setActiveTab] = useState<"tr" | "en">("tr");
 
   useEffect(() => {
     fetchContent();
@@ -123,7 +122,7 @@ export default function HomepageContentPage() {
     return <div className="text-center py-12">İçerik yüklenemedi</div>;
   }
 
-  const currentLang = content[activeTab];
+  const currentLang = content.tr;
 
   return (
     <div>
@@ -203,21 +202,21 @@ export default function HomepageContentPage() {
                 <label className="block text-sm font-medium mb-2">Şirket Adı</label>
                 <Input
                   value={currentLang.companyName}
-                  onChange={(e) => updateField([activeTab, "companyName"], e.target.value)}
+                  onChange={(e) => updateField(["tr", "companyName"], e.target.value)}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Ana Başlık</label>
                 <Input
                   value={currentLang.mainTitle}
-                  onChange={(e) => updateField([activeTab, "mainTitle"], e.target.value)}
+                  onChange={(e) => updateField(["tr", "mainTitle"], e.target.value)}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Giriş Metni</label>
                 <Textarea
                   value={currentLang.introText}
-                  onChange={(e) => updateField([activeTab, "introText"], e.target.value)}
+                  onChange={(e) => updateField(["tr", "introText"], e.target.value)}
                   rows={3}
                 />
               </div>
@@ -233,7 +232,7 @@ export default function HomepageContentPage() {
                 <label className="block text-sm font-medium mb-2">Başlık</label>
                 <Input
                   value={currentLang.pureFish.title}
-                  onChange={(e) => updateField([activeTab, "pureFish", "title"], e.target.value)}
+                  onChange={(e) => updateField(["tr", "pureFish", "title"], e.target.value)}
                 />
               </div>
               <div>
@@ -241,7 +240,7 @@ export default function HomepageContentPage() {
                 <Textarea
                   value={currentLang.pureFish.description}
                   onChange={(e) =>
-                    updateField([activeTab, "pureFish", "description"], e.target.value)
+                    updateField(["tr", "pureFish", "description"], e.target.value)
                   }
                   rows={4}
                 />
@@ -251,7 +250,7 @@ export default function HomepageContentPage() {
                 <Input
                   value={currentLang.pureFish.contactButton}
                   onChange={(e) =>
-                    updateField([activeTab, "pureFish", "contactButton"], e.target.value)
+                    updateField(["tr", "pureFish", "contactButton"], e.target.value)
                   }
                 />
               </div>
@@ -268,7 +267,7 @@ export default function HomepageContentPage() {
                 <Input
                   value={currentLang.benefits.aminoAcid.title}
                   onChange={(e) =>
-                    updateField([activeTab, "benefits", "aminoAcid", "title"], e.target.value)
+                    updateField(["tr", "benefits", "aminoAcid", "title"], e.target.value)
                   }
                   className="mb-2"
                 />
@@ -276,7 +275,7 @@ export default function HomepageContentPage() {
                   value={currentLang.benefits.aminoAcid.description}
                   onChange={(e) =>
                     updateField(
-                      [activeTab, "benefits", "aminoAcid", "description"],
+                      ["tr", "benefits", "aminoAcid", "description"],
                       e.target.value
                     )
                   }
@@ -289,7 +288,7 @@ export default function HomepageContentPage() {
                   value={currentLang.benefits.digestibility.title}
                   onChange={(e) =>
                     updateField(
-                      [activeTab, "benefits", "digestibility", "title"],
+                      ["tr", "benefits", "digestibility", "title"],
                       e.target.value
                     )
                   }
@@ -299,7 +298,7 @@ export default function HomepageContentPage() {
                   value={currentLang.benefits.digestibility.description}
                   onChange={(e) =>
                     updateField(
-                      [activeTab, "benefits", "digestibility", "description"],
+                      ["tr", "benefits", "digestibility", "description"],
                       e.target.value
                     )
                   }
@@ -313,7 +312,7 @@ export default function HomepageContentPage() {
                 <Input
                   value={currentLang.benefits.metabolism.title}
                   onChange={(e) =>
-                    updateField([activeTab, "benefits", "metabolism", "title"], e.target.value)
+                    updateField(["tr", "benefits", "metabolism", "title"], e.target.value)
                   }
                   className="mb-2"
                 />
@@ -321,7 +320,7 @@ export default function HomepageContentPage() {
                   value={currentLang.benefits.metabolism.description}
                   onChange={(e) =>
                     updateField(
-                      [activeTab, "benefits", "metabolism", "description"],
+                      ["tr", "benefits", "metabolism", "description"],
                       e.target.value
                     )
                   }
@@ -344,14 +343,14 @@ export default function HomepageContentPage() {
                 <Input
                   value={currentLang.features.fcr.title}
                   onChange={(e) =>
-                    updateField([activeTab, "features", "fcr", "title"], e.target.value)
+                    updateField(["tr", "features", "fcr", "title"], e.target.value)
                   }
                   className="mb-2"
                 />
                 <Textarea
                   value={currentLang.features.fcr.description}
                   onChange={(e) =>
-                    updateField([activeTab, "features", "fcr", "description"], e.target.value)
+                    updateField(["tr", "features", "fcr", "description"], e.target.value)
                   }
                   rows={3}
                 />
@@ -364,7 +363,7 @@ export default function HomepageContentPage() {
                   value={currentLang.features.digestibility.title}
                   onChange={(e) =>
                     updateField(
-                      [activeTab, "features", "digestibility", "title"],
+                      ["tr", "features", "digestibility", "title"],
                       e.target.value
                     )
                   }
@@ -374,7 +373,7 @@ export default function HomepageContentPage() {
                   value={currentLang.features.digestibility.description}
                   onChange={(e) =>
                     updateField(
-                      [activeTab, "features", "digestibility", "description"],
+                      ["tr", "features", "digestibility", "description"],
                       e.target.value
                     )
                   }
@@ -386,14 +385,14 @@ export default function HomepageContentPage() {
                 <Input
                   value={currentLang.features.quality.title}
                   onChange={(e) =>
-                    updateField([activeTab, "features", "quality", "title"], e.target.value)
+                    updateField(["tr", "features", "quality", "title"], e.target.value)
                   }
                   className="mb-2"
                 />
                 <Textarea
                   value={currentLang.features.quality.description}
                   onChange={(e) =>
-                    updateField([activeTab, "features", "quality", "description"], e.target.value)
+                    updateField(["tr", "features", "quality", "description"], e.target.value)
                   }
                   rows={3}
                 />
@@ -403,14 +402,14 @@ export default function HomepageContentPage() {
                 <Input
                   value={currentLang.features.immune.title}
                   onChange={(e) =>
-                    updateField([activeTab, "features", "immune", "title"], e.target.value)
+                    updateField(["tr", "features", "immune", "title"], e.target.value)
                   }
                   className="mb-2"
                 />
                 <Textarea
                   value={currentLang.features.immune.description}
                   onChange={(e) =>
-                    updateField([activeTab, "features", "immune", "description"], e.target.value)
+                    updateField(["tr", "features", "immune", "description"], e.target.value)
                   }
                   rows={3}
                 />

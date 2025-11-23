@@ -57,16 +57,6 @@ export default function BiologicalsSectionPage() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [data, setData] = useState<BiologicalsData | null>(null);
-  const [activeTab, setActiveTab] = useState<"tr" | "en" | "ru" | "fa" | "az" | "ar">("tr");
-
-  const languages = [
-    { code: "tr", name: "Türkçe" },
-    { code: "en", name: "English" },
-    { code: "ru", name: "Русский" },
-    { code: "fa", name: "فارسی" },
-    { code: "az", name: "Azərbaycan" },
-    { code: "ar", name: "العربية" },
-  ] as const;
 
   useEffect(() => {
     fetchData();
@@ -171,7 +161,7 @@ export default function BiologicalsSectionPage() {
     return <div className="text-center py-12">Veri yüklenemedi</div>;
   }
 
-  const currentLang = data[activeTab];
+  const currentLang = data.tr;
 
   return (
     <div>
@@ -328,48 +318,32 @@ export default function BiologicalsSectionPage() {
         </CardContent>
       </Card>
 
-      {/* Language Tabs */}
-      <div className="flex gap-2 mb-6 flex-wrap">
-        {languages.map((lang) => (
-          <button
-            key={lang.code}
-            onClick={() => setActiveTab(lang.code as any)}
-            className={`px-4 py-2 rounded-lg font-medium ${
-              activeTab === lang.code
-                ? "bg-primary-ocean text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-            }`}
-          >
-            {lang.name}
-          </button>
-        ))}
-      </div>
 
       {/* Content Form */}
-      <Card>
-        <CardHeader>
-          <CardTitle>İçerik ({languages.find((l) => l.code === activeTab)?.name})</CardTitle>
-        </CardHeader>
+        <Card>
+          <CardHeader>
+            <CardTitle>İçerik (Türkçe)</CardTitle>
+          </CardHeader>
         <CardContent className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-2">Başlık</label>
             <Input
               value={currentLang.title}
-              onChange={(e) => updateField([activeTab, "title"], e.target.value)}
+              onChange={(e) => updateField(["tr", "title"], e.target.value)}
             />
           </div>
           <div>
             <label className="block text-sm font-medium mb-2">Alt Başlık</label>
             <Input
               value={currentLang.subtitle}
-              onChange={(e) => updateField([activeTab, "subtitle"], e.target.value)}
+              onChange={(e) => updateField(["tr", "subtitle"], e.target.value)}
             />
           </div>
           <div>
             <label className="block text-sm font-medium mb-2">Açıklama</label>
             <Textarea
               value={currentLang.description}
-              onChange={(e) => updateField([activeTab, "description"], e.target.value)}
+              onChange={(e) => updateField(["tr", "description"], e.target.value)}
               rows={4}
             />
           </div>
@@ -377,7 +351,7 @@ export default function BiologicalsSectionPage() {
             <label className="block text-sm font-medium mb-2">Buton Metni</label>
             <Input
               value={currentLang.buttonText}
-              onChange={(e) => updateField([activeTab, "buttonText"], e.target.value)}
+              onChange={(e) => updateField(["tr", "buttonText"], e.target.value)}
             />
           </div>
         </CardContent>
