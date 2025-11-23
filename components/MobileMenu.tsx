@@ -81,16 +81,41 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ locale, menuItems: propM
           />
           <div className="fixed top-16 right-0 w-64 bg-white shadow-lg z-50 h-[calc(100vh-4rem)] overflow-y-auto">
             <div className="flex flex-col p-4 space-y-4">
-              {menuItems.map((item, index) => (
-                <Link
-                  key={`mobile-${item.href}-${index}`}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-text-dark hover:text-primary-ocean transition-colors py-2 border-b border-gray-200"
-                >
-                  {locale === "tr" ? item.labelTr : item.labelEn}
-                </Link>
-              ))}
+              {menuItems.map((item, index) => {
+                // Fix href with current locale
+                const fixHref = (href: string) => {
+                  const segments = href.split("/").filter(Boolean);
+                  if (segments.length > 0 && ["tr", "en", "ru", "fa", "az", "ar"].includes(segments[0])) {
+                    segments[0] = locale;
+                    return `/${segments.join("/")}`;
+                  }
+                  if (href.startsWith("/")) {
+                    return `/${locale}${href}`;
+                  }
+                  return `/${locale}/${href}`;
+                };
+
+                const getLabel = () => {
+                  if (locale === "tr") return item.labelTr || item.labelEn;
+                  if (locale === "en") return item.labelEn || item.labelTr;
+                  if (locale === "ru") return item.labelRu || item.labelEn || item.labelTr;
+                  if (locale === "fa") return item.labelFa || item.labelEn || item.labelTr;
+                  if (locale === "az") return item.labelAz || item.labelTr || item.labelEn;
+                  if (locale === "ar") return item.labelAr || item.labelEn || item.labelTr;
+                  return item.labelEn || item.labelTr;
+                };
+
+                return (
+                  <Link
+                    key={`mobile-${item.href}-${index}`}
+                    href={fixHref(item.href)}
+                    onClick={() => setIsOpen(false)}
+                    className="text-text-dark hover:text-primary-ocean transition-colors py-2 border-b border-gray-200"
+                  >
+                    {getLabel()}
+                  </Link>
+                );
+              })}
               <div className="pt-4 border-t border-gray-200">
                 <LanguageSwitcher />
               </div>
