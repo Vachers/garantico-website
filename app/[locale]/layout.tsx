@@ -7,6 +7,7 @@ import { MobileMenu } from "@/components/MobileMenu";
 import Link from "next/link";
 import { i18nConfig } from "@/lib/i18n/config";
 import { Search, Globe } from "lucide-react";
+import Image from "next/image";
 import { db } from "@/lib/db";
 import { navigationItems } from "@/lib/db/schema";
 import { eq, asc } from "drizzle-orm";
@@ -209,8 +210,15 @@ export default async function LocaleLayout({
         <nav className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between h-20">
-              <Link href={`/${locale}`} className="text-2xl font-bold text-primary-blue">
-                GarantiCo
+              <Link href={`/${locale}`} className="flex items-center">
+                <Image
+                  src="/logo.png"
+                  alt="GarantiCo Logo"
+                  width={150}
+                  height={60}
+                  className="h-12 w-auto object-contain"
+                  priority
+                />
               </Link>
               <div className="hidden lg:flex items-center gap-8">
                 {displayMainMenu.map((item, index) => (
