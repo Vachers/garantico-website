@@ -67,28 +67,41 @@ export const LanguageSwitcher: React.FC = () => {
     };
   }, [isOpen]);
 
-  const handleToggle = (e: React.MouseEvent) => {
+  const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
     console.log("Language switcher clicked, current state:", isOpen);
-    setIsOpen(!isOpen);
+    const newState = !isOpen;
+    console.log("Setting state to:", newState);
+    setIsOpen(newState);
   };
 
+  console.log("LanguageSwitcher render - isOpen:", isOpen, "pathname:", pathname, "currentLocale:", currentLocale);
+
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative" ref={dropdownRef} style={{ zIndex: 1000 }}>
       <button
         type="button"
         onClick={handleToggle}
+        onMouseDown={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
         className="flex items-center gap-2 px-2 py-1 hover:bg-white/10 transition-colors rounded cursor-pointer"
+        style={{ pointerEvents: "auto" }}
         aria-label="Change language"
       >
-        <Globe className="w-4 h-4 text-white" />
-        <span className="text-sm font-medium text-white uppercase">
+        <Globe className="w-4 h-4 text-white pointer-events-none" />
+        <span className="text-sm font-medium text-white uppercase pointer-events-none">
           {currentLocale}
         </span>
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-[100]">
+        <div 
+          className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200"
+          style={{ zIndex: 1001 }}
+          onClick={(e) => e.stopPropagation()}
+        >
           {i18nConfig.locales.map((locale) => (
             <button
               key={locale}
