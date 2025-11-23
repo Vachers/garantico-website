@@ -7,16 +7,22 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 
 interface MobileMenuProps {
   locale: string;
+  menuItems?: Array<{
+    id?: number;
+    labelTr: string;
+    labelEn: string;
+    href: string;
+  }>;
 }
 
-export const MobileMenu: React.FC<MobileMenuProps> = ({ locale }) => {
+export const MobileMenu: React.FC<MobileMenuProps> = ({ locale, menuItems: propMenuItems }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const menuItems = [
-    { href: `/${locale}`, label: locale === "tr" ? "Ana Sayfa" : "Home" },
-    { href: `/${locale}/about`, label: locale === "tr" ? "Hakkımızda" : "About" },
-    { href: `/${locale}/products`, label: locale === "tr" ? "Ürünlerimiz" : "Products" },
-    { href: `/${locale}/contact`, label: locale === "tr" ? "İletişim" : "Contact" },
+  const menuItems = propMenuItems || [
+    { href: `/${locale}`, labelTr: "Ana Sayfa", labelEn: "Home" },
+    { href: `/${locale}/about`, labelTr: "Hakkımızda", labelEn: "About" },
+    { href: `/${locale}/products`, labelTr: "Ürünlerimiz", labelEn: "Products" },
+    { href: `/${locale}/contact`, labelTr: "İletişim", labelEn: "Contact" },
   ];
 
   return (
@@ -37,14 +43,14 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ locale }) => {
           />
           <div className="fixed top-16 right-0 w-64 bg-white shadow-lg z-50 h-[calc(100vh-4rem)] overflow-y-auto">
             <div className="flex flex-col p-4 space-y-4">
-              {menuItems.map((item) => (
+              {menuItems.map((item, index) => (
                 <Link
-                  key={item.href}
+                  key={item.id || item.href || index}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
                   className="text-text-dark hover:text-primary-ocean transition-colors py-2 border-b border-gray-200"
                 >
-                  {item.label}
+                  {locale === "tr" ? item.labelTr : item.labelEn}
                 </Link>
               ))}
               <div className="pt-4 border-t border-gray-200">

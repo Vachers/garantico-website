@@ -19,6 +19,8 @@ const menuItems = [
   { href: "/admin/products", label: "Ürünler", icon: Package },
   { href: "/admin/inquiries", label: "Teklifler", icon: MessageSquare },
   { href: "/admin/content", label: "İçerik Yönetimi", icon: FileText },
+  { href: "/admin/hero", label: "Hero Section", icon: Image },
+  { href: "/admin/menu", label: "Menü Yönetimi", icon: FileText },
   { href: "/admin/settings", label: "Ayarlar", icon: Settings },
   { href: "/admin/logo", label: "Logo", icon: Image },
 ];

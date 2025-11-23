@@ -6,6 +6,9 @@ import { Fish, Award, Truck, TrendingUp, Users, Globe, CheckCircle2, ArrowRight,
 import Link from "next/link";
 import type { Metadata } from "next";
 import { i18nConfig } from "@/lib/i18n/config";
+import { db } from "@/lib/db";
+import { siteSettings } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 // Force dynamic rendering to avoid static generation issues
 export const dynamic = 'force-dynamic';
@@ -38,15 +41,30 @@ export async function generateMetadata({
   };
 }
 
-export default function HomePage({ params }: { params: { locale: string } }) {
+export default async function HomePage({ params }: { params: { locale: string } }) {
   const locale = params.locale || "tr";
+
+  // Fetch hero settings from database
+  const [heroImageSetting, overlayOpacitySetting] = await Promise.all([
+    db
+      .select()
+      .from(siteSettings)
+      .where(eq(siteSettings.key, "hero_image_url"))
+      .limit(1),
+    db
+      .select()
+      .from(siteSettings)
+      .where(eq(siteSettings.key, "hero_overlay_opacity"))
+      .limit(1),
+  ]);
+
+  const heroImage = heroImageSetting[0]?.value || "/hero-image.png";
+  const overlayOpacity = overlayOpacitySetting[0]?.value
+    ? parseInt(overlayOpacitySetting[0].value)
+    : 40;
 
   const t = {
     tr: {
-      hero: {
-        title: "Gelecek. Yeni Bir Değer",
-        subtitle: "İnovasyon",
-      },
       highlightTopics: {
         title: "Öne Çıkan Konular",
       },
@@ -79,10 +97,6 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       },
     },
     en: {
-      hero: {
-        title: "The Future. A New Value",
-        subtitle: "Innovation",
-      },
       highlightTopics: {
         title: "Highlight Topics",
       },
@@ -187,31 +201,21 @@ export default function HomePage({ params }: { params: { locale: string } }) {
       />
       <div className="min-h-screen">
         {/* Hero Section - Full width with background image */}
-        <section className="relative w-full h-[85vh] md:h-[90vh] flex items-center justify-start overflow-hidden">
+        <section className="relative w-full h-[85vh] md:h-[90vh] flex items-center justify-center overflow-hidden">
           {/* Background Image */}
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: "url('/hero-image.png')",
+              backgroundImage: `url('${heroImage}')`,
             }}
           >
-            {/* Dark overlay for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary-blue/85 via-primary-blue/70 to-primary-blue/50"></div>
-          </div>
-          
-          {/* Content */}
-          <div className="container mx-auto px-4 md:px-8 relative z-10">
-            <div className="max-w-2xl">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight drop-shadow-2xl">
-                {content.hero.title}
-              </h1>
-              <div className="flex items-center gap-3">
-                <Play className="w-8 h-8 md:w-10 md:h-10 text-white drop-shadow-lg" />
-                <span className="text-xl md:text-2xl text-white font-medium drop-shadow-lg">
-                  {content.hero.subtitle}
-                </span>
-              </div>
-            </div>
+            {/* Overlay - opacity controlled from admin */}
+            <div 
+              className="absolute inset-0 bg-gradient-to-r from-primary-blue via-primary-blue to-primary-blue"
+              style={{
+                opacity: overlayOpacity / 100,
+              }}
+            ></div>
           </div>
         </section>
 

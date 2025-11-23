@@ -79,3 +79,15 @@ export const siteSettings = pgTable("site_settings", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Navigation menu items table
+export const navigationItems = pgTable("navigation_items", {
+  id: serial("id").primaryKey(),
+  labelTr: varchar("label_tr", { length: 255 }).notNull(),
+  labelEn: varchar("label_en", { length: 255 }).notNull(),
+  href: varchar("href", { length: 255 }).notNull(),
+  order: integer("order").default(0),
+  menuType: varchar("menu_type", { length: 50 }).notNull(), // 'top' or 'main'
+  active: boolean("active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+

@@ -7,6 +7,9 @@ import { MobileMenu } from "@/components/MobileMenu";
 import Link from "next/link";
 import { i18nConfig } from "@/lib/i18n/config";
 import { Search, Globe } from "lucide-react";
+import { db } from "@/lib/db";
+import { navigationItems } from "@/lib/db/schema";
+import { eq, asc } from "drizzle-orm";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -62,7 +65,7 @@ export function generateStaticParams() {
   return i18nConfig.locales.map((locale) => ({ locale }));
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params,
 }: {
@@ -70,6 +73,31 @@ export default function LocaleLayout({
   params: { locale: string };
 }) {
   const locale = params.locale || i18nConfig.defaultLocale;
+
+  // Fetch menu items from database
+  const menuItems = await db
+    .select()
+    .from(navigationItems)
+    .where(eq(navigationItems.active, true))
+    .orderBy(asc(navigationItems.order));
+
+  const topMenuItems = menuItems.filter((item) => item.menuType === "top");
+  const mainMenuItems = menuItems.filter((item) => item.menuType === "main");
+
+  // Default menu items if database is empty
+  const defaultTopMenu = [
+    { labelTr: "Dünya İçin, Yaşam İçin", labelEn: "For Earth, For Life", href: "#", menuType: "top" as const },
+  ];
+
+  const defaultMainMenu = [
+    { labelTr: "Ana Sayfa", labelEn: "Home", href: `/${locale}`, menuType: "main" as const },
+    { labelTr: "Hakkımızda", labelEn: "About", href: `/${locale}/about`, menuType: "main" as const },
+    { labelTr: "Ürünlerimiz", labelEn: "Products", href: `/${locale}/products`, menuType: "main" as const },
+    { labelTr: "İletişim", labelEn: "Contact", href: `/${locale}/contact`, menuType: "main" as const },
+  ];
+
+  const displayTopMenu = topMenuItems.length > 0 ? topMenuItems : defaultTopMenu;
+  const displayMainMenu = mainMenuItems.length > 0 ? mainMenuItems : defaultMainMenu;
 
   return (
     <html lang={locale}>
@@ -79,9 +107,15 @@ export default function LocaleLayout({
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-6">
-                <span className="font-medium">
-                  {locale === "tr" ? "Dünya İçin, Yaşam İçin" : "For Earth, For Life"}
-                </span>
+                {displayTopMenu.map((item) => (
+                  <Link
+                    key={item.id || item.href}
+                    href={item.href}
+                    className="hover:text-primary-light transition-colors"
+                  >
+                    {locale === "tr" ? item.labelTr : item.labelEn}
+                  </Link>
+                ))}
               </div>
               <div className="flex items-center gap-6">
                 <LanguageSwitcher />
@@ -107,32 +141,17 @@ export default function LocaleLayout({
                 GarantiCo
               </Link>
               <div className="hidden lg:flex items-center gap-8">
-                <Link
-                  href={`/${locale}`}
-                  className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
-                >
-                  {locale === "tr" ? "Keşfet" : "Discover"}
-                </Link>
-                <Link
-                  href={`/${locale}/about`}
-                  className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
-                >
-                  {locale === "tr" ? "Kurumsal" : "Corporate"}
-                </Link>
-                <Link
-                  href={`/${locale}/products`}
-                  className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
-                >
-                  {locale === "tr" ? "Ürünler" : "Products"}
-                </Link>
-                <Link
-                  href={`/${locale}/contact`}
-                  className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
-                >
-                  {locale === "tr" ? "İletişim" : "Contact"}
-                </Link>
+                {displayMainMenu.map((item) => (
+                  <Link
+                    key={item.id || item.href}
+                    href={item.href}
+                    className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
+                  >
+                    {locale === "tr" ? item.labelTr : item.labelEn}
+                  </Link>
+                ))}
               </div>
-              <MobileMenu locale={locale} />
+              <MobileMenu locale={locale} menuItems={displayMainMenu} />
             </div>
           </div>
         </nav>
