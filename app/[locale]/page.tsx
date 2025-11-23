@@ -192,7 +192,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: "url('/hero-image.jpg')",
+              backgroundImage: "url('/hero-image.png')",
             }}
           >
             {/* Dark overlay for text readability */}
