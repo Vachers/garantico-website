@@ -134,7 +134,7 @@ export default async function LocaleLayout({
                   href={`/${locale}/contact`}
                   className="hover:text-primary-light transition-colors"
                 >
-                  {locale === "tr" ? "İletişim" : "Contact"}
+                  {getMenuLabel({ labelTr: "İletişim", labelEn: "Contact", labelRu: "Контакты", labelFa: "تماس", labelAz: "Əlaqə", labelAr: "اتصل بنا" })}
                 </Link>
                 <button className="hover:text-primary-light transition-colors">
                   <Search className="w-4 h-4" />
