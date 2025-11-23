@@ -166,29 +166,6 @@ export default function HomepageContentPage() {
         </CardContent>
       </Card>
 
-      {/* Language Tabs */}
-      <div className="flex gap-2 mb-6">
-        <button
-          onClick={() => setActiveTab("tr")}
-          className={`px-4 py-2 rounded-lg font-medium ${
-            activeTab === "tr"
-              ? "bg-primary-ocean text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
-        >
-          Türkçe
-        </button>
-        <button
-          onClick={() => setActiveTab("en")}
-          className={`px-4 py-2 rounded-lg font-medium ${
-            activeTab === "en"
-              ? "bg-primary-ocean text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
-        >
-          English
-        </button>
-      </div>
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Left Column */}
