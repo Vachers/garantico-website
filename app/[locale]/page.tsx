@@ -168,7 +168,9 @@ export default async function HomePage({ params }: { params: { locale: string } 
     },
   };
 
-  const content = t[locale as keyof typeof t] || t.tr;
+  // Use database content if available, otherwise use default
+  const content = contentSectionData?.[locale] || defaultContent[locale as keyof typeof defaultContent] || defaultContent.tr;
+  const sectionBgColor = contentSectionData?.backgroundColor || "#e0f2fe";
 
   // Sample products data
   const featuredProducts = [
