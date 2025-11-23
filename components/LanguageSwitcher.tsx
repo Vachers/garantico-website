@@ -67,11 +67,20 @@ export const LanguageSwitcher: React.FC = () => {
     };
   }, [isOpen]);
 
+  const handleToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("Language switcher clicked, current state:", isOpen);
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-2 py-1 hover:bg-white/10 transition-colors rounded"
+        type="button"
+        onClick={handleToggle}
+        className="flex items-center gap-2 px-2 py-1 hover:bg-white/10 transition-colors rounded cursor-pointer"
+        aria-label="Change language"
       >
         <Globe className="w-4 h-4 text-white" />
         <span className="text-sm font-medium text-white uppercase">
@@ -79,11 +88,17 @@ export const LanguageSwitcher: React.FC = () => {
         </span>
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+        <div className="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 z-[100]">
           {i18nConfig.locales.map((locale) => (
             <button
               key={locale}
-              onClick={() => switchLanguage(locale)}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log("Language selected:", locale);
+                switchLanguage(locale);
+              }}
               className={`w-full text-left px-4 py-2 text-sm hover:bg-primary-light/10 first:rounded-t-lg last:rounded-b-lg transition-colors ${
                 currentLocale === locale
                   ? "bg-primary-ocean/10 text-primary-ocean font-semibold"
