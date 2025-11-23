@@ -300,14 +300,14 @@ export default function ProductsManagementPage() {
                   categoryId: e.target.value ? parseInt(e.target.value) : null,
                 })
               }
-            >
-              <option value="">Kategori Seçin</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.nameTr} / {cat.nameEn}
-                </option>
-              ))}
-            </Select>
+              options={[
+                { value: "", label: "Kategori Seçin" },
+                ...categories.map((cat) => ({
+                  value: cat.id.toString(),
+                  label: `${cat.nameTr} / ${cat.nameEn}`,
+                })),
+              ]}
+            />
             <div className="flex items-center gap-4">
               <label className="flex items-center gap-2">
                 <input
@@ -419,14 +419,14 @@ export default function ProductsManagementPage() {
                         categoryId: e.target.value ? parseInt(e.target.value) : null,
                       })
                     }
-                  >
-                    <option value="">Kategori Seçin</option>
-                    {categories.map((cat) => (
-                      <option key={cat.id} value={cat.id}>
-                        {cat.nameTr} / {cat.nameEn}
-                      </option>
-                    ))}
-                  </Select>
+                    options={[
+                      { value: "", label: "Kategori Seçin" },
+                      ...categories.map((cat) => ({
+                        value: cat.id.toString(),
+                        label: `${cat.nameTr} / ${cat.nameEn}`,
+                      })),
+                    ]}
+                  />
                   <div className="flex items-center gap-4">
                     <label className="flex items-center gap-2">
                       <input
