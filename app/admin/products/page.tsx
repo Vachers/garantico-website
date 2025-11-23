@@ -483,34 +483,37 @@ export default function ProductsManagementPage() {
                         <ImageIcon className="w-8 h-8 text-gray-400" />
                       </div>
                     )}
-                    <label className="mt-2 block">
+                    <div className="mt-2">
                       <input
                         type="file"
                         accept="image/*"
                         className="hidden"
+                        id={`product-image-upload-${product.id}`}
                         onChange={(e) => handleImageUpload(e, product.id)}
                         disabled={uploading === product.id}
                       />
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-full"
-                        disabled={uploading === product.id}
-                        as="span"
-                      >
-                        {uploading === product.id ? (
-                          <>
-                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                            Yükleniyor...
-                          </>
-                        ) : (
-                          <>
-                            <Upload className="w-4 h-4 mr-2" />
-                            Resim Yükle
-                          </>
-                        )}
-                      </Button>
-                    </label>
+                      <label htmlFor={`product-image-upload-${product.id}`} className="cursor-pointer">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          type="button"
+                          className="w-full"
+                          disabled={uploading === product.id}
+                        >
+                          {uploading === product.id ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              Yükleniyor...
+                            </>
+                          ) : (
+                            <>
+                              <Upload className="w-4 h-4 mr-2" />
+                              Resim Yükle
+                            </>
+                          )}
+                        </Button>
+                      </label>
+                    </div>
                   </div>
 
                   {/* Product Info */}
