@@ -7,8 +7,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { i18nConfig } from "@/lib/i18n/config";
 import { db } from "@/lib/db";
-import { siteSettings } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { siteSettings, products } from "@/lib/db/schema";
+import { eq, desc } from "drizzle-orm";
 
 // Force dynamic rendering to avoid static generation issues
 export const dynamic = 'force-dynamic';
@@ -367,62 +367,39 @@ export default async function HomePage({ params }: { params: { locale: string } 
     return en;
   };
 
-  // Sample products data
-  const featuredProducts = [
-    {
-      id: 1,
-      name: getLocalizedText("Balık Unu", "Fish Meal", "Рыбная мука", "آرد ماهی", "Balıq unu", "وجبة السمك"),
-      description: getLocalizedText(
-        "Premium kalite balık unu, %65+ protein içeriği ile yüksek besin değeri",
-        "Premium quality fish meal with high nutritional value, 65%+ protein content",
-        "Премиум качественная рыбная мука с высокой пищевой ценностью, содержание белка 65%+",
-        "آرد ماهی با کیفیت ممتاز با ارزش غذایی بالا، محتوای پروتئین 65٪+",
-        "Premium keyfiyyətli balıq unu, yüksək qida dəyəri ilə, 65%+ protein tərkibi",
-        "وجبة سمك عالية الجودة بقيمة غذائية عالية، محتوى بروتين 65٪+"
-      ),
-      isFeatured: true,
-      slug: "balik-unu",
-    },
-    {
-      id: 2,
-      name: getLocalizedText("Tavuk Unu", "Chicken Meal", "Куриная мука", "آرد مرغ", "Toyuq unu", "وجبة الدجاج"),
-      description: getLocalizedText(
-        "Yüksek protein içerikli tavuk unu, hayvan yemi üretimi için ideal",
-        "High protein chicken meal, ideal for animal feed production",
-        "Куриная мука с высоким содержанием белка, идеальна для производства кормов для животных",
-        "آرد مرغ با محتوای پروتئین بالا، ایده‌آل برای تولید خوراک حیوانات",
-        "Yüksək protein tərkibli toyuq unu, heyvan yemi istehsalı üçün ideal",
-        "وجبة دجاج عالية البروتين، مثالية لإنتاج علف الحيوانات"
-      ),
-      slug: "tavuk-unu",
-    },
-    {
-      id: 3,
-      name: getLocalizedText("Soya Küspesi", "Soybean Meal", "Соевый шрот", "کنجاله سویا", "Soya küspəsi", "كسب فول الصويا"),
-      description: getLocalizedText(
-        "Bitkisel protein kaynağı, ekonomik ve besleyici",
-        "Plant-based protein source, economical and nutritious",
-        "Растительный источник белка, экономичный и питательный",
-        "منبع پروتئین گیاهی، اقتصادی و مغذی",
-        "Bitki əsaslı protein mənbəyi, iqtisadi və qidalandırıcı",
-        "مصدر بروتين نباتي، اقتصادي ومغذي"
-      ),
-      slug: "soya-kuspesi",
-    },
-    {
-      id: 4,
-      name: getLocalizedText("Balık Yağı", "Fish Oil", "Рыбий жир", "روغن ماهی", "Balıq yağı", "زيت السمك"),
-      description: getLocalizedText(
-        "Omega-3 açısından zengin balık yağı, premium kalite",
-        "Omega-3 rich fish oil, premium quality",
-        "Рыбий жир, богатый омега-3, премиум качество",
-        "روغن ماهی غنی از امگا 3، کیفیت ممتاز",
-        "Omega-3 baxımından zəngin balıq yağı, premium keyfiyyət",
-        "زيت سمك غني بأوميغا 3، جودة ممتازة"
-      ),
-      slug: "balik-yagi",
-    },
-  ];
+  // Fetch products from database (limit to 8, prioritize featured)
+  const dbProducts = await db
+    .select()
+    .from(products)
+    .where(eq(products.active, true))
+    .orderBy(desc(products.isFeatured), products.id)
+    .limit(8);
+
+  // Helper function to get localized product name
+  const getProductName = (product: typeof dbProducts[0]) => {
+    if (locale === "tr") return product.nameTr;
+    if (locale === "en") return product.nameEn;
+    // Fallback to English or Turkish
+    return product.nameEn || product.nameTr;
+  };
+
+  // Helper function to get localized product description
+  const getProductDescription = (product: typeof dbProducts[0]) => {
+    if (locale === "tr") return product.descriptionTr || "";
+    if (locale === "en") return product.descriptionEn || "";
+    // Fallback to English or Turkish
+    return product.descriptionEn || product.descriptionTr || "";
+  };
+
+  // Map database products to component format
+  const featuredProducts = dbProducts.map((product) => ({
+    id: product.id,
+    name: getProductName(product),
+    description: getProductDescription(product),
+    imageUrl: product.imageUrl || undefined,
+    isFeatured: product.isFeatured || false,
+    slug: product.slug,
+  }));
 
   // Structured data for SEO
   const structuredData = {
@@ -659,17 +636,33 @@ export default async function HomePage({ params }: { params: { locale: string } 
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-12">
-              {featuredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  name={product.name}
-                  description={product.description}
-                  isFeatured={product.isFeatured}
-                  locale={locale}
-                  slug={product.slug}
-                />
-              ))}
+              {featuredProducts.length > 0 ? (
+                featuredProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    name={product.name}
+                    description={product.description}
+                    imageUrl={product.imageUrl}
+                    isFeatured={product.isFeatured}
+                    locale={locale}
+                    slug={product.slug}
+                  />
+                ))
+              ) : (
+                <div className="col-span-full text-center py-12">
+                  <p className="text-text-light">
+                    {getLocalizedText(
+                      "Henüz ürün eklenmemiş.",
+                      "No products available yet.",
+                      "Продукты еще не добавлены.",
+                      "هنوز محصولی اضافه نشده است.",
+                      "Hələ məhsul əlavə edilməyib.",
+                      "لم تتم إضافة منتجات بعد."
+                    )}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </section>
