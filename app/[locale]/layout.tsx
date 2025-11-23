@@ -99,6 +99,17 @@ export default async function LocaleLayout({
   const displayTopMenu = topMenuItems.length > 0 ? topMenuItems : defaultTopMenu;
   const displayMainMenu = mainMenuItems.length > 0 ? mainMenuItems : defaultMainMenu;
 
+  // Helper function to get menu label based on locale
+  const getMenuLabel = (item: any) => {
+    if (locale === "tr") return item.labelTr || item.label;
+    if (locale === "en") return item.labelEn || item.label;
+    if (locale === "ru") return item.labelRu || item.labelEn || item.labelTr || item.label;
+    if (locale === "fa") return item.labelFa || item.labelEn || item.labelTr || item.label;
+    if (locale === "az") return item.labelAz || item.labelTr || item.labelEn || item.label;
+    if (locale === "ar") return item.labelAr || item.labelEn || item.labelTr || item.label;
+    return item.labelEn || item.labelTr || item.label;
+  };
+
   return (
     <html lang={locale}>
       <body className={inter.className}>
@@ -113,7 +124,7 @@ export default async function LocaleLayout({
                     href={item.href}
                     className="hover:text-primary-light transition-colors"
                   >
-                    {locale === "tr" ? item.labelTr : item.labelEn}
+                    {getMenuLabel(item)}
                   </Link>
                 ))}
               </div>
@@ -147,7 +158,7 @@ export default async function LocaleLayout({
                     href={item.href}
                     className="text-text-dark hover:text-primary-ocean transition-colors font-medium text-sm"
                   >
-                    {locale === "tr" ? item.labelTr : item.labelEn}
+                    {getMenuLabel(item)}
                   </Link>
                 ))}
               </div>

@@ -188,43 +188,70 @@ export default async function HomePage({ params }: { params: { locale: string } 
   const content = contentSectionData?.[locale] || defaultContent[locale as keyof typeof defaultContent] || defaultContent.tr;
   const sectionBgColor = contentSectionData?.backgroundColor || "#e0f2fe";
 
+  // Helper function to get localized text
+  const getLocalizedText = (tr: string, en: string, ru?: string, fa?: string, az?: string, ar?: string) => {
+    if (locale === "tr") return tr;
+    if (locale === "en") return en;
+    if (locale === "ru") return ru || en;
+    if (locale === "fa") return fa || en;
+    if (locale === "az") return az || tr;
+    if (locale === "ar") return ar || en;
+    return en;
+  };
+
   // Sample products data
   const featuredProducts = [
     {
       id: 1,
-      name: locale === "tr" ? "Balık Unu" : "Fish Meal",
-      description:
-        locale === "tr"
-          ? "Premium kalite balık unu, %65+ protein içeriği ile yüksek besin değeri"
-          : "Premium quality fish meal with high nutritional value, 65%+ protein content",
+      name: getLocalizedText("Balık Unu", "Fish Meal", "Рыбная мука", "آرد ماهی", "Balıq unu", "وجبة السمك"),
+      description: getLocalizedText(
+        "Premium kalite balık unu, %65+ protein içeriği ile yüksek besin değeri",
+        "Premium quality fish meal with high nutritional value, 65%+ protein content",
+        "Премиум качественная рыбная мука с высокой пищевой ценностью, содержание белка 65%+",
+        "آرد ماهی با کیفیت ممتاز با ارزش غذایی بالا، محتوای پروتئین 65٪+",
+        "Premium keyfiyyətli balıq unu, yüksək qida dəyəri ilə, 65%+ protein tərkibi",
+        "وجبة سمك عالية الجودة بقيمة غذائية عالية، محتوى بروتين 65٪+"
+      ),
       isFeatured: true,
       slug: "balik-unu",
     },
     {
       id: 2,
-      name: locale === "tr" ? "Tavuk Unu" : "Chicken Meal",
-      description:
-        locale === "tr"
-          ? "Yüksek protein içerikli tavuk unu, hayvan yemi üretimi için ideal"
-          : "High protein chicken meal, ideal for animal feed production",
+      name: getLocalizedText("Tavuk Unu", "Chicken Meal", "Куриная мука", "آرد مرغ", "Toyuq unu", "وجبة الدجاج"),
+      description: getLocalizedText(
+        "Yüksek protein içerikli tavuk unu, hayvan yemi üretimi için ideal",
+        "High protein chicken meal, ideal for animal feed production",
+        "Куриная мука с высоким содержанием белка, идеальна для производства кормов для животных",
+        "آرد مرغ با محتوای پروتئین بالا، ایده‌آل برای تولید خوراک حیوانات",
+        "Yüksək protein tərkibli toyuq unu, heyvan yemi istehsalı üçün ideal",
+        "وجبة دجاج عالية البروتين، مثالية لإنتاج علف الحيوانات"
+      ),
       slug: "tavuk-unu",
     },
     {
       id: 3,
-      name: locale === "tr" ? "Soya Küspesi" : "Soybean Meal",
-      description:
-        locale === "tr"
-          ? "Bitkisel protein kaynağı, ekonomik ve besleyici"
-          : "Plant-based protein source, economical and nutritious",
+      name: getLocalizedText("Soya Küspesi", "Soybean Meal", "Соевый шрот", "کنجاله سویا", "Soya küspəsi", "كسب فول الصويا"),
+      description: getLocalizedText(
+        "Bitkisel protein kaynağı, ekonomik ve besleyici",
+        "Plant-based protein source, economical and nutritious",
+        "Растительный источник белка, экономичный и питательный",
+        "منبع پروتئین گیاهی، اقتصادی و مغذی",
+        "Bitki əsaslı protein mənbəyi, iqtisadi və qidalandırıcı",
+        "مصدر بروتين نباتي، اقتصادي ومغذي"
+      ),
       slug: "soya-kuspesi",
     },
     {
       id: 4,
-      name: locale === "tr" ? "Balık Yağı" : "Fish Oil",
-      description:
-        locale === "tr"
-          ? "Omega-3 açısından zengin balık yağı, premium kalite"
-          : "Omega-3 rich fish oil, premium quality",
+      name: getLocalizedText("Balık Yağı", "Fish Oil", "Рыбий жир", "روغن ماهی", "Balıq yağı", "زيت السمك"),
+      description: getLocalizedText(
+        "Omega-3 açısından zengin balık yağı, premium kalite",
+        "Omega-3 rich fish oil, premium quality",
+        "Рыбий жир, богатый омега-3, премиум качество",
+        "روغن ماهی غنی از امگا 3، کیفیت ممتاز",
+        "Omega-3 baxımından zəngin balıq yağı, premium keyfiyyət",
+        "زيت سمك غني بأوميغا 3، جودة ممتازة"
+      ),
       slug: "balik-yagi",
     },
   ];
@@ -396,52 +423,59 @@ export default async function HomePage({ params }: { params: { locale: string } 
         {/* Biologicals Section - Split Layout */}
         {biologicalsSectionData?.enabled !== false && (
           <section className="bg-white py-16 md:py-24">
-            <div className="grid md:grid-cols-2 min-h-[500px]">
-              {/* Left Panel - Text Content */}
-              <div 
-                className="p-12 md:p-16 flex flex-col justify-center"
-                style={{ backgroundColor: biologicalsSectionData?.leftBgColor || "#0c4a6e" }}
-              >
-                <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                  {biologicalsSectionData?.[locale]?.title || (locale === "tr" ? "Balık Unu" : "Fish Meal")}
-                </h2>
-                <p className="text-xl md:text-2xl font-bold mb-6" style={{ color: biologicalsSectionData?.accentColor || "#f97316" }}>
-                  {biologicalsSectionData?.[locale]?.subtitle || (locale === "tr" ? "Kaliteli Yem Hammaddeleri" : "Quality Feed Materials")}
-                </p>
-                <p className="text-lg text-white/90 mb-8 leading-relaxed">
-                  {biologicalsSectionData?.[locale]?.description || (locale === "tr" 
-                    ? "Yüksek protein içeriği ve doğru aminoasit profili ile balık yemi üretiminde en uygun ürünleri keşfedin. Rejeneratif tarım, hayvan sağlığı ve neden önemli olduklarını öğrenin."
-                    : "Discover the most suitable products for fish feed production with high protein content and correct amino acid profile. Learn about regenerative agriculture, animal health and why they are important.")}
-                </p>
-                <Link href={`/${locale}/products`}>
-                  <Button 
-                    variant="secondary" 
-                    size="lg" 
-                    className="w-fit"
-                    style={{ 
-                      backgroundColor: biologicalsSectionData?.buttonColor || "#f97316",
-                      color: "white"
-                    }}
-                  >
-                    {biologicalsSectionData?.[locale]?.buttonText || (locale === "tr" ? "BALIK UNU NEDİR?" : "WHAT IS FISH MEAL?")}
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-              {/* Right Panel - Image */}
-              <div 
-                className="bg-cover bg-center bg-no-repeat"
-                style={{
-                  backgroundImage: biologicalsSectionData?.imageUrl 
-                    ? `url('${biologicalsSectionData.imageUrl}')` 
-                    : "url('/placeholder-biologicals.jpg')"
-                }}
-              >
-                {!biologicalsSectionData?.imageUrl && (
-                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-400">Resim yüklenecek</span>
-                  </div>
-                )}
+            <div className="container mx-auto px-4">
+              <div className="grid md:grid-cols-2 min-h-[500px] rounded-lg overflow-hidden shadow-lg">
+                {/* Left Panel - Text Content */}
+                <div 
+                  className="p-12 md:p-16 flex flex-col justify-center"
+                  style={{ backgroundColor: biologicalsSectionData?.leftBgColor || "#0c4a6e" }}
+                >
+                  <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                    {biologicalsSectionData?.[locale]?.title || getLocalizedText("Balık Unu", "Fish Meal", "Рыбная мука", "آرد ماهی", "Balıq unu", "وجبة السمك")}
+                  </h2>
+                  <p className="text-xl md:text-2xl font-bold mb-6" style={{ color: biologicalsSectionData?.accentColor || "#f97316" }}>
+                    {biologicalsSectionData?.[locale]?.subtitle || getLocalizedText("Kaliteli Yem Hammaddeleri", "Quality Feed Materials", "Качественные кормовые материалы", "مواد خوراکی با کیفیت", "Keyfiyyətli yem materialları", "مواد علفية عالية الجودة")}
+                  </p>
+                  <p className="text-lg text-white/90 mb-8 leading-relaxed">
+                    {biologicalsSectionData?.[locale]?.description || getLocalizedText(
+                      "Yüksek protein içeriği ve doğru aminoasit profili ile balık yemi üretiminde en uygun ürünleri keşfedin. Rejeneratif tarım, hayvan sağlığı ve neden önemli olduklarını öğrenin.",
+                      "Discover the most suitable products for fish feed production with high protein content and correct amino acid profile. Learn about regenerative agriculture, animal health and why they are important.",
+                      "Откройте для себя наиболее подходящие продукты для производства рыбных кормов с высоким содержанием белка и правильным профилем аминокислот. Узнайте о регенеративном сельском хозяйстве, здоровье животных и почему это важно.",
+                      "محصولات مناسب برای تولید خوراک ماهی با محتوای پروتئین بالا و پروفایل اسید آمینه صحیح را کشف کنید. درباره کشاورزی احیاکننده، سلامت حیوانات و اهمیت آنها بیاموزید.",
+                      "Yüksək protein tərkibi və düzgün amin turşusu profili ilə balıq yemi istehsalı üçün ən uyğun məhsulları kəşf edin. Reqenerativ kənd təsərrüfatı, heyvan sağlamlığı və onların niyə vacib olduğunu öyrənin.",
+                      "اكتشف المنتجات الأنسب لإنتاج علف الأسماك بمحتوى بروتين عالي وملف أحماض أمينية صحيح. تعرف على الزراعة المتجددة وصحة الحيوانات ولماذا هي مهمة."
+                    )}
+                  </p>
+                  <Link href={`/${locale}/products`}>
+                    <Button 
+                      variant="secondary" 
+                      size="lg" 
+                      className="w-fit"
+                      style={{ 
+                        backgroundColor: biologicalsSectionData?.buttonColor || "#f97316",
+                        color: "white"
+                      }}
+                    >
+                      {biologicalsSectionData?.[locale]?.buttonText || getLocalizedText("BALIK UNU NEDİR?", "WHAT IS FISH MEAL?", "ЧТО ТАКОЕ РЫБНАЯ МУКА?", "آرد ماهی چیست؟", "BALIQ UNU NƏDİR?", "ما هي وجبة السمك؟")}
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
+                  </Link>
+                </div>
+                {/* Right Panel - Image */}
+                <div 
+                  className="bg-cover bg-center bg-no-repeat"
+                  style={{
+                    backgroundImage: biologicalsSectionData?.imageUrl 
+                      ? `url('${biologicalsSectionData.imageUrl}')` 
+                      : "url('/placeholder-biologicals.jpg')"
+                  }}
+                >
+                  {!biologicalsSectionData?.imageUrl && (
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-400">Resim yüklenecek</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </section>
@@ -452,7 +486,7 @@ export default async function HomePage({ params }: { params: { locale: string } 
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-text-dark mb-4">
-                {locale === "tr" ? "Ürünlerimiz" : "Our Products"}
+                {getLocalizedText("Ürünlerimiz", "Our Products", "Наша продукция", "محصولات ما", "Məhsullarımız", "منتجاتنا")}
               </h2>
             </div>
 
